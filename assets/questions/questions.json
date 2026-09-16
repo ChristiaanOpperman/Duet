@@ -1,0 +1,557 @@
+{
+  "version": 1,
+  "questions": [
+    {
+      "id": "fav-nut",
+      "category": "favourites",
+      "selfPrompt": "What is your favourite nut?",
+      "partnerPrompt": "What is {name}'s favourite nut?"
+    },
+    {
+      "id": "fav-takeaway",
+      "category": "favourites",
+      "selfPrompt": "What's your go-to takeaway order?",
+      "partnerPrompt": "What's {name}'s go-to takeaway order?"
+    },
+    {
+      "id": "fav-film",
+      "category": "favourites",
+      "selfPrompt": "What's your favourite film of all time?",
+      "partnerPrompt": "What's {name}'s favourite film of all time?"
+    },
+    {
+      "id": "fav-season",
+      "category": "favourites",
+      "selfPrompt": "What's your favourite season of the year?",
+      "partnerPrompt": "What's {name}'s favourite season of the year?"
+    },
+    {
+      "id": "fav-icecream",
+      "category": "favourites",
+      "selfPrompt": "What's your favourite ice cream flavour?",
+      "partnerPrompt": "What's {name}'s favourite ice cream flavour?"
+    },
+    {
+      "id": "fav-night-out-drink",
+      "category": "favourites",
+      "selfPrompt": "What do you order on a night out?",
+      "partnerPrompt": "What does {name} order on a night out?"
+    },
+    {
+      "id": "fav-shower-song",
+      "category": "favourites",
+      "selfPrompt": "What song do you sing in the shower?",
+      "partnerPrompt": "What song does {name} sing in the shower?"
+    },
+    {
+      "id": "fav-dream-holiday",
+      "category": "favourites",
+      "selfPrompt": "What's your dream holiday destination?",
+      "partnerPrompt": "What's {name}'s dream holiday destination?"
+    },
+    {
+      "id": "fav-pizza-topping",
+      "category": "favourites",
+      "selfPrompt": "What's your favourite pizza topping?",
+      "partnerPrompt": "What's {name}'s favourite pizza topping?"
+    },
+    {
+      "id": "fav-colour-to-wear",
+      "category": "favourites",
+      "selfPrompt": "What colour do you wear the most?",
+      "partnerPrompt": "What colour does {name} wear the most?"
+    },
+    {
+      "id": "fav-breakfast",
+      "category": "favourites",
+      "selfPrompt": "What's your ideal breakfast?",
+      "partnerPrompt": "What's {name}'s ideal breakfast?"
+    },
+    {
+      "id": "fav-crisps",
+      "category": "favourites",
+      "selfPrompt": "What's your favourite crisp flavour?",
+      "partnerPrompt": "What's {name}'s favourite crisp flavour?"
+    },
+    {
+      "id": "fav-board-game",
+      "category": "favourites",
+      "selfPrompt": "What's your favourite board or card game?",
+      "partnerPrompt": "What's {name}'s favourite board or card game?"
+    },
+    {
+      "id": "fav-animal",
+      "category": "favourites",
+      "selfPrompt": "What's your favourite animal?",
+      "partnerPrompt": "What's {name}'s favourite animal?"
+    },
+    {
+      "id": "fav-smell",
+      "category": "favourites",
+      "selfPrompt": "What's your favourite smell in the world?",
+      "partnerPrompt": "What's {name}'s favourite smell in the world?"
+    },
+    {
+      "id": "fav-sandwich",
+      "category": "favourites",
+      "selfPrompt": "What's your perfect sandwich?",
+      "partnerPrompt": "What's {name}'s perfect sandwich?"
+    },
+    {
+      "id": "fav-day",
+      "category": "favourites",
+      "selfPrompt": "What's your favourite day of the week?",
+      "partnerPrompt": "What's {name}'s favourite day of the week?"
+    },
+    {
+      "id": "fav-coffee-order",
+      "category": "favourites",
+      "selfPrompt": "What's your usual coffee order?",
+      "partnerPrompt": "What's {name}'s usual coffee order?"
+    },
+    {
+      "id": "fav-childhood-show",
+      "category": "favourites",
+      "selfPrompt": "What was your favourite TV show as a kid?",
+      "partnerPrompt": "What was {name}'s favourite TV show as a kid?"
+    },
+    {
+      "id": "fav-dessert",
+      "category": "favourites",
+      "selfPrompt": "What's your favourite dessert?",
+      "partnerPrompt": "What's {name}'s favourite dessert?"
+    },
+    {
+      "id": "fav-way-to-relax",
+      "category": "favourites",
+      "selfPrompt": "What's your favourite way to unwind?",
+      "partnerPrompt": "What's {name}'s favourite way to unwind?"
+    },
+    {
+      "id": "fav-emoji",
+      "category": "favourites",
+      "selfPrompt": "Which emoji do you use the most?",
+      "partnerPrompt": "Which emoji does {name} use the most?"
+    },
+    {
+      "id": "fav-biscuit",
+      "category": "favourites",
+      "selfPrompt": "What's your favourite biscuit?",
+      "partnerPrompt": "What's {name}'s favourite biscuit?"
+    },
+    {
+      "id": "fav-sport",
+      "category": "favourites",
+      "selfPrompt": "What sport do you most like to watch?",
+      "partnerPrompt": "What sport does {name} most like to watch?"
+    },
+    {
+      "id": "fav-superhero",
+      "category": "favourites",
+      "selfPrompt": "Which superhero would you want to be?",
+      "partnerPrompt": "Which superhero would {name} want to be?"
+    },
+    {
+      "id": "fav-cheese",
+      "category": "favourites",
+      "selfPrompt": "What's your favourite cheese?",
+      "partnerPrompt": "What's {name}'s favourite cheese?"
+    },
+    {
+      "id": "habit-snooze",
+      "category": "habits",
+      "selfPrompt": "How many times do you hit snooze in the morning?",
+      "partnerPrompt": "How many times does {name} hit snooze in the morning?"
+    },
+    {
+      "id": "habit-shower-time",
+      "category": "habits",
+      "selfPrompt": "Morning shower or evening shower?",
+      "partnerPrompt": "Does {name} shower in the morning or the evening?"
+    },
+    {
+      "id": "habit-toilet-roll",
+      "category": "habits",
+      "selfPrompt": "Toilet roll: over or under?",
+      "partnerPrompt": "Toilet roll: does {name} say over or under?"
+    },
+    {
+      "id": "habit-socks-in-bed",
+      "category": "habits",
+      "selfPrompt": "Socks on or off in bed?",
+      "partnerPrompt": "Does {name} keep socks on or off in bed?"
+    },
+    {
+      "id": "habit-battery-panic",
+      "category": "habits",
+      "selfPrompt": "What battery percentage makes you panic?",
+      "partnerPrompt": "What battery percentage makes {name} panic?"
+    },
+    {
+      "id": "habit-first-app",
+      "category": "habits",
+      "selfPrompt": "What's the first app you open in the morning?",
+      "partnerPrompt": "What's the first app {name} opens in the morning?"
+    },
+    {
+      "id": "habit-early-or-late",
+      "category": "habits",
+      "selfPrompt": "Are you always early or always late?",
+      "partnerPrompt": "Is {name} always early or always late?"
+    },
+    {
+      "id": "habit-driving-peeve",
+      "category": "habits",
+      "selfPrompt": "What's your biggest pet peeve when driving?",
+      "partnerPrompt": "What's {name}'s biggest pet peeve when driving?"
+    },
+    {
+      "id": "habit-guilty-tv",
+      "category": "habits",
+      "selfPrompt": "What's your guilty-pleasure TV show?",
+      "partnerPrompt": "What's {name}'s guilty-pleasure TV show?"
+    },
+    {
+      "id": "habit-bed-side",
+      "category": "habits",
+      "selfPrompt": "Which side of the bed do you sleep on?",
+      "partnerPrompt": "Which side of the bed does {name} sleep on?"
+    },
+    {
+      "id": "habit-hot-drink",
+      "category": "habits",
+      "selfPrompt": "How do you take your tea or coffee?",
+      "partnerPrompt": "How does {name} take their tea or coffee?"
+    },
+    {
+      "id": "habit-worst-chore",
+      "category": "habits",
+      "selfPrompt": "Which household chore do you hate most?",
+      "partnerPrompt": "Which household chore does {name} hate most?"
+    },
+    {
+      "id": "habit-secret-snack",
+      "category": "habits",
+      "selfPrompt": "What do you snack on when nobody's watching?",
+      "partnerPrompt": "What does {name} snack on when nobody's watching?"
+    },
+    {
+      "id": "habit-shopping-list",
+      "category": "habits",
+      "selfPrompt": "Do you shop with a list or wing it?",
+      "partnerPrompt": "Does {name} shop with a list or wing it?"
+    },
+    {
+      "id": "habit-nap-length",
+      "category": "habits",
+      "selfPrompt": "What's your ideal nap length?",
+      "partnerPrompt": "What's {name}'s ideal nap length?"
+    },
+    {
+      "id": "habit-lost-item",
+      "category": "habits",
+      "selfPrompt": "What do you lose most often?",
+      "partnerPrompt": "What does {name} lose most often?"
+    },
+    {
+      "id": "habit-argument-style",
+      "category": "habits",
+      "selfPrompt": "In an argument, do you go quiet or talk it out?",
+      "partnerPrompt": "In an argument, does {name} go quiet or talk it out?"
+    },
+    {
+      "id": "habit-thermostat",
+      "category": "habits",
+      "selfPrompt": "What temperature do you want the room at?",
+      "partnerPrompt": "What temperature does {name} want the room at?"
+    },
+    {
+      "id": "habit-weird-food-combo",
+      "category": "habits",
+      "selfPrompt": "What's your weirdest food combination?",
+      "partnerPrompt": "What's {name}'s weirdest food combination?"
+    },
+    {
+      "id": "habit-overused-phrase",
+      "category": "habits",
+      "selfPrompt": "What phrase do you say far too often?",
+      "partnerPrompt": "What phrase does {name} say far too often?"
+    },
+    {
+      "id": "habit-cinema-snack",
+      "category": "habits",
+      "selfPrompt": "What do you always get at the cinema?",
+      "partnerPrompt": "What does {name} always get at the cinema?"
+    },
+    {
+      "id": "habit-phone-wallpaper",
+      "category": "habits",
+      "selfPrompt": "What's on your phone wallpaper right now?",
+      "partnerPrompt": "What's on {name}'s phone wallpaper right now?"
+    },
+    {
+      "id": "habit-getting-ready",
+      "category": "habits",
+      "selfPrompt": "How long do you really take to get ready?",
+      "partnerPrompt": "How long does {name} really take to get ready?"
+    },
+    {
+      "id": "habit-queue-behaviour",
+      "category": "habits",
+      "selfPrompt": "What do you do while waiting in a long queue?",
+      "partnerPrompt": "What does {name} do while waiting in a long queue?"
+    },
+    {
+      "id": "hist-met-where",
+      "category": "history",
+      "selfPrompt": "Where did the two of you first meet?",
+      "partnerPrompt": "Where does {name} say the two of you first met?"
+    },
+    {
+      "id": "hist-first-date",
+      "category": "history",
+      "selfPrompt": "Where did you go on your first date?",
+      "partnerPrompt": "Where does {name} say you went on your first date?"
+    },
+    {
+      "id": "hist-first-impression",
+      "category": "history",
+      "selfPrompt": "What was your first impression of your partner?",
+      "partnerPrompt": "What was {name}'s first impression of you?"
+    },
+    {
+      "id": "hist-first-words",
+      "category": "history",
+      "selfPrompt": "What were the first words you ever said to each other?",
+      "partnerPrompt": "What does {name} say were the first words you said to each other?"
+    },
+    {
+      "id": "hist-first-trip",
+      "category": "history",
+      "selfPrompt": "Where did you go on your first trip together?",
+      "partnerPrompt": "Where does {name} say you went on your first trip together?"
+    },
+    {
+      "id": "hist-first-meal-cooked",
+      "category": "history",
+      "selfPrompt": "What was the first meal you cooked for your partner?",
+      "partnerPrompt": "What was the first meal {name} cooked for you?"
+    },
+    {
+      "id": "hist-hardest-laugh",
+      "category": "history",
+      "selfPrompt": "What's the hardest you've ever laughed together?",
+      "partnerPrompt": "What does {name} say is the hardest you've ever laughed together?"
+    },
+    {
+      "id": "hist-first-gift",
+      "category": "history",
+      "selfPrompt": "What was the first gift you gave your partner?",
+      "partnerPrompt": "What was the first gift {name} gave you?"
+    },
+    {
+      "id": "hist-our-song",
+      "category": "history",
+      "selfPrompt": "Which song reminds you most of your partner?",
+      "partnerPrompt": "Which song reminds {name} most of you?"
+    },
+    {
+      "id": "hist-argue-about",
+      "category": "history",
+      "selfPrompt": "What do the two of you argue about most?",
+      "partnerPrompt": "What does {name} say you argue about most?"
+    },
+    {
+      "id": "hist-nickname",
+      "category": "history",
+      "selfPrompt": "What nickname do you use for your partner?",
+      "partnerPrompt": "What nickname does {name} use for you?"
+    },
+    {
+      "id": "hist-first-film",
+      "category": "history",
+      "selfPrompt": "What was the first film you watched together?",
+      "partnerPrompt": "What does {name} say was the first film you watched together?"
+    },
+    {
+      "id": "hist-embarrassing-moment",
+      "category": "history",
+      "selfPrompt": "What's your most embarrassing moment together?",
+      "partnerPrompt": "What does {name} say is your most embarrassing moment together?"
+    },
+    {
+      "id": "hist-best-holiday",
+      "category": "history",
+      "selfPrompt": "What's the best holiday you've had together?",
+      "partnerPrompt": "What does {name} say is the best holiday you've had together?"
+    },
+    {
+      "id": "hist-said-it-first",
+      "category": "history",
+      "selfPrompt": "Who said 'I love you' first?",
+      "partnerPrompt": "Who does {name} say said 'I love you' first?"
+    },
+    {
+      "id": "hist-anniversary-month",
+      "category": "history",
+      "selfPrompt": "Which month is your anniversary?",
+      "partnerPrompt": "Which month does {name} say your anniversary is?"
+    },
+    {
+      "id": "hist-annoying-habit",
+      "category": "history",
+      "selfPrompt": "What's your partner's most annoying habit?",
+      "partnerPrompt": "What does {name} think is your most annoying habit?"
+    },
+    {
+      "id": "hist-best-quality",
+      "category": "history",
+      "selfPrompt": "What's your partner's best quality?",
+      "partnerPrompt": "What does {name} think is your best quality?"
+    },
+    {
+      "id": "hist-kept-keepsake",
+      "category": "history",
+      "selfPrompt": "What have you kept from the early days of your relationship?",
+      "partnerPrompt": "What has {name} kept from the early days of your relationship?"
+    },
+    {
+      "id": "hist-next-adventure",
+      "category": "history",
+      "selfPrompt": "Where do you most want to travel together next?",
+      "partnerPrompt": "Where does {name} most want to travel together next?"
+    },
+    {
+      "id": "wyr-beach-mountains",
+      "category": "would_you_rather",
+      "selfPrompt": "Would you rather holiday on a beach or in the mountains?",
+      "partnerPrompt": "Would {name} rather holiday on a beach or in the mountains?"
+    },
+    {
+      "id": "wyr-cook-clean",
+      "category": "would_you_rather",
+      "selfPrompt": "Would you rather always cook or always clean up?",
+      "partnerPrompt": "Would {name} rather always cook or always clean up?"
+    },
+    {
+      "id": "wyr-fly-invisible",
+      "category": "would_you_rather",
+      "selfPrompt": "Would you rather be able to fly or be invisible?",
+      "partnerPrompt": "Would {name} rather be able to fly or be invisible?"
+    },
+    {
+      "id": "wyr-coffee-cheese",
+      "category": "would_you_rather",
+      "selfPrompt": "Would you rather give up coffee or cheese forever?",
+      "partnerPrompt": "Would {name} rather give up coffee or cheese forever?"
+    },
+    {
+      "id": "wyr-early-late-riser",
+      "category": "would_you_rather",
+      "selfPrompt": "Would you rather always wake at 5am or never before 11am?",
+      "partnerPrompt": "Would {name} rather always wake at 5am or never before 11am?"
+    },
+    {
+      "id": "wyr-camp-hotel",
+      "category": "would_you_rather",
+      "selfPrompt": "Would you rather camp in a tent or stay in a hotel?",
+      "partnerPrompt": "Would {name} rather camp in a tent or stay in a hotel?"
+    },
+    {
+      "id": "wyr-pizza-pasta",
+      "category": "would_you_rather",
+      "selfPrompt": "Would you rather eat only pizza or only pasta for a year?",
+      "partnerPrompt": "Would {name} rather eat only pizza or only pasta for a year?"
+    },
+    {
+      "id": "wyr-minds-future",
+      "category": "would_you_rather",
+      "selfPrompt": "Would you rather read minds or see the future?",
+      "partnerPrompt": "Would {name} rather read minds or see the future?"
+    },
+    {
+      "id": "wyr-summer-winter",
+      "category": "would_you_rather",
+      "selfPrompt": "Would you rather live somewhere always hot or always cold?",
+      "partnerPrompt": "Would {name} rather live somewhere always hot or always cold?"
+    },
+    {
+      "id": "wyr-cat-dog",
+      "category": "would_you_rather",
+      "selfPrompt": "Would you rather have a house full of cats or dogs?",
+      "partnerPrompt": "Would {name} rather have a house full of cats or dogs?"
+    },
+    {
+      "id": "wyr-cinema-couch",
+      "category": "would_you_rather",
+      "selfPrompt": "Would you rather watch a film at the cinema or on the couch?",
+      "partnerPrompt": "Would {name} rather watch a film at the cinema or on the couch?"
+    },
+    {
+      "id": "wyr-party-dinner",
+      "category": "would_you_rather",
+      "selfPrompt": "Would you rather throw a big party or host a small dinner?",
+      "partnerPrompt": "Would {name} rather throw a big party or host a small dinner?"
+    },
+    {
+      "id": "wyr-phone-tv",
+      "category": "would_you_rather",
+      "selfPrompt": "Would you rather give up your phone or your TV for a month?",
+      "partnerPrompt": "Would {name} rather give up their phone or their TV for a month?"
+    },
+    {
+      "id": "wyr-drive-passenger",
+      "category": "would_you_rather",
+      "selfPrompt": "Would you rather drive or be the passenger?",
+      "partnerPrompt": "Would {name} rather drive or be the passenger?"
+    },
+    {
+      "id": "wyr-sweet-savoury",
+      "category": "would_you_rather",
+      "selfPrompt": "Would you rather only eat sweet or only savoury food?",
+      "partnerPrompt": "Would {name} rather only eat sweet or only savoury food?"
+    },
+    {
+      "id": "wyr-city-countryside",
+      "category": "would_you_rather",
+      "selfPrompt": "Would you rather live in the city or the countryside?",
+      "partnerPrompt": "Would {name} rather live in the city or the countryside?"
+    },
+    {
+      "id": "wyr-plan-spontaneous",
+      "category": "would_you_rather",
+      "selfPrompt": "Would you rather plan every detail or be completely spontaneous?",
+      "partnerPrompt": "Would {name} rather plan every detail or be completely spontaneous?"
+    },
+    {
+      "id": "wyr-sing-dance",
+      "category": "would_you_rather",
+      "selfPrompt": "Would you rather sing everything you say or dance everywhere you go?",
+      "partnerPrompt": "Would {name} rather sing everything they say or dance everywhere they go?"
+    },
+    {
+      "id": "wyr-rich-famous",
+      "category": "would_you_rather",
+      "selfPrompt": "Would you rather be rich and unknown or famous and broke?",
+      "partnerPrompt": "Would {name} rather be rich and unknown or famous and broke?"
+    },
+    {
+      "id": "wyr-past-future",
+      "category": "would_you_rather",
+      "selfPrompt": "Would you rather travel to the past or the future?",
+      "partnerPrompt": "Would {name} rather travel to the past or the future?"
+    },
+    {
+      "id": "wyr-same-meal",
+      "category": "would_you_rather",
+      "selfPrompt": "Would you rather eat the same meal every day or never eat the same thing twice?",
+      "partnerPrompt": "Would {name} rather eat the same meal every day or never eat the same thing twice?"
+    },
+    {
+      "id": "wyr-taste-smell",
+      "category": "would_you_rather",
+      "selfPrompt": "Would you rather lose your sense of taste or your sense of smell?",
+      "partnerPrompt": "Would {name} rather lose their sense of taste or their sense of smell?"
+    }
+  ]
+}
