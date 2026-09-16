@@ -7,7 +7,7 @@ import 'package:duet/models/question.dart';
 import 'package:duet/state/game_controller.dart';
 import 'package:duet/state/game_phase.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 /// Renders every screen at phone size and compares it against a checked-in
@@ -67,6 +67,7 @@ void main() {
     GameController controller,
     String name, {
     double scroll = 0,
+    Future<void> Function(WidgetTester tester)? afterPump,
   }) async {
     tester.view.physicalSize = const Size(780, 1688);
     tester.view.devicePixelRatio = 2;
@@ -78,6 +79,12 @@ void main() {
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 1200));
     await tester.pump(const Duration(milliseconds: 1200));
+
+    if (afterPump != null) {
+      await afterPump(tester);
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 600));
+    }
 
     if (scroll != 0) {
       await tester.drag(find.byType(ListView).last, Offset(0, -scroll));
@@ -108,6 +115,42 @@ void main() {
   testWidgets('setup options', (tester) async {
     final controller = await game()..goToOptionsSetup();
     await shoot(tester, controller, 'setup_options');
+  });
+
+  testWidgets('custom questions, empty', (tester) async {
+    final controller = await game()..goToCustomQuestions();
+    await shoot(tester, controller, 'custom_questions_empty');
+  });
+
+  testWidgets('custom questions with entries', (tester) async {
+    final controller = await game();
+    controller.addCustomQuestion(
+      selfPrompt: 'What is your favourite nut?',
+      partnerPrompt: "What is {name}'s favourite nut?",
+    );
+    controller.addCustomQuestion(
+      selfPrompt: 'Which of my friends would you save first?',
+      partnerPrompt: "Which of {name}'s friends would you save first?",
+    );
+    controller.goToCustomQuestions();
+    await shoot(tester, controller, 'custom_questions');
+  });
+
+  testWidgets('custom question being written', (tester) async {
+    final controller = await game()..goToCustomQuestions();
+    await shoot(
+      tester,
+      controller,
+      'custom_questions_writing',
+      afterPump: (tester) async {
+        // Types only the first field: the partner prompt and the preview
+        // underneath it should both derive themselves.
+        await tester.enterText(
+          find.byType(TextField).first,
+          'What do you do when you cannot sleep?',
+        );
+      },
+    );
   });
 
   testWidgets('answer handoff', (tester) async {

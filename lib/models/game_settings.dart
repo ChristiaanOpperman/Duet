@@ -10,6 +10,7 @@ class GameSettings {
       QuestionCategory.habits,
       QuestionCategory.history,
       QuestionCategory.wouldYouRather,
+      QuestionCategory.custom,
     },
   });
 

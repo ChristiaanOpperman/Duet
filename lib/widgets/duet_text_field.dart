@@ -19,6 +19,7 @@ class DuetTextField extends StatelessWidget {
     this.textInputAction = TextInputAction.done,
     this.maxLength,
     this.large = false,
+    this.focusNode,
   });
 
   final TextEditingController controller;
@@ -31,6 +32,7 @@ class DuetTextField extends StatelessWidget {
   final TextInputAction textInputAction;
   final int? maxLength;
   final bool large;
+  final FocusNode? focusNode;
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +46,7 @@ class DuetTextField extends StatelessWidget {
         ],
         TextField(
           controller: controller,
+          focusNode: focusNode,
           autofocus: autofocus,
           textCapitalization: textCapitalization,
           textInputAction: textInputAction,

@@ -27,7 +27,17 @@ iOS and Android builds need Xcode 16+ and the Android SDK cmdline-tools
 respectively. The app uses no plugins, so nothing else is required once those
 are installed.
 
-## Editing the questions
+## Writing your own questions
+
+During setup, **Game options → Your own questions** lets the table write
+questions for itself. Type the question as you would ask it — "What do you do
+when you cannot sleep?" — and the app writes the version their partner hears
+("What does Alex do when they cannot sleep?") for you to check or edit, with a
+live preview. They get shuffled in with the built-in pack.
+
+Like the game history, these live in memory for the session only.
+
+## Editing the built-in questions
 
 `assets/questions/questions.json`. Each entry needs both voices:
 

@@ -7,9 +7,15 @@ import 'package:duet/state/game_phase.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 /// Stands in for the bundled pack so controller tests don't depend on its
-/// exact contents.
+/// exact contents. Like the real pack it never produces `custom` questions —
+/// those only ever come from players writing them during a session.
 class _FakeRepository extends QuestionRepository {
   _FakeRepository(this.count);
+
+  static final _bundled = [
+    for (final category in QuestionCategory.values)
+      if (category != QuestionCategory.custom) category,
+  ];
 
   final int count;
 
@@ -18,7 +24,7 @@ class _FakeRepository extends QuestionRepository {
         for (var i = 0; i < count; i++)
           Question(
             id: 'q$i',
-            category: QuestionCategory.values[i % QuestionCategory.values.length],
+            category: _bundled[i % _bundled.length],
             selfPrompt: 'Self prompt $i?',
             partnerPrompt: "{name}'s prompt $i?",
           ),
@@ -418,6 +424,178 @@ void main() {
       game.showRecap(game.history.single);
       game.closeRecap();
       expect(game.phase, GamePhase.home, reason: 'back to home this time');
+    });
+  });
+
+  group('custom questions', () {
+    test('start empty and are added to the pool', () async {
+      final game = await readyGame();
+      expect(game.customQuestions, isEmpty);
+      final before = game.eligibleQuestions.length;
+
+      game.addCustomQuestion(
+        selfPrompt: 'What is your favourite nut?',
+        partnerPrompt: "What is {name}'s favourite nut?",
+      );
+
+      expect(game.customQuestions, hasLength(1));
+      expect(game.eligibleQuestions.length, before + 1);
+      expect(game.allQuestions.length, before + 1);
+    });
+
+    test('are trimmed and given unique ids', () async {
+      final game = await readyGame();
+      game.addCustomQuestion(
+        selfPrompt: '  Do you snore?  ',
+        partnerPrompt: '  Does {name} snore?  ',
+      );
+      game.addCustomQuestion(
+        selfPrompt: 'Do you snore?',
+        partnerPrompt: 'Does {name} snore?',
+      );
+
+      final ids = game.customQuestions.map((q) => q.id).toSet();
+      expect(ids, hasLength(2), reason: 'duplicate text still gets a new id');
+      expect(game.customQuestions.first.selfPrompt, 'Do you snore?');
+      expect(game.customQuestions.first.partnerPrompt, 'Does {name} snore?');
+    });
+
+    test('a partner prompt without the name token is rejected', () async {
+      final game = await readyGame();
+      expect(
+        () => game.addCustomQuestion(
+          selfPrompt: 'What is your favourite nut?',
+          partnerPrompt: 'What is their favourite nut?',
+        ),
+        throwsArgumentError,
+      );
+      expect(game.customQuestions, isEmpty);
+    });
+
+    test('empty prompts are rejected', () async {
+      final game = await readyGame();
+      expect(
+        () => game.addCustomQuestion(selfPrompt: '  ', partnerPrompt: '{name}?'),
+        throwsArgumentError,
+      );
+      expect(
+        () => game.addCustomQuestion(selfPrompt: 'Something?', partnerPrompt: ''),
+        throwsArgumentError,
+      );
+    });
+
+    test('adding one switches its category on', () async {
+      final game = await readyGame();
+      game.toggleCategory(QuestionCategory.custom);
+      expect(game.settings.categories.contains(QuestionCategory.custom), isFalse);
+
+      game.addCustomQuestion(
+        selfPrompt: 'Do you snore?',
+        partnerPrompt: 'Does {name} snore?',
+      );
+
+      expect(game.settings.categories.contains(QuestionCategory.custom), isTrue,
+          reason: 'otherwise the question would silently never appear');
+    });
+
+    test('switching the category off excludes them from the pool', () async {
+      final game = await readyGame();
+      game.addCustomQuestion(
+        selfPrompt: 'Do you snore?',
+        partnerPrompt: 'Does {name} snore?',
+      );
+      final withCustom = game.eligibleQuestions.length;
+
+      game.toggleCategory(QuestionCategory.custom);
+      expect(game.eligibleQuestions.length, withCustom - 1);
+      expect(
+        game.eligibleQuestions.any((q) => q.category == QuestionCategory.custom),
+        isFalse,
+      );
+    });
+
+    test('removing one takes it back out of the pool', () async {
+      final game = await readyGame();
+      game.addCustomQuestion(
+        selfPrompt: 'Do you snore?',
+        partnerPrompt: 'Does {name} snore?',
+      );
+      final id = game.customQuestions.single.id;
+      final withCustom = game.eligibleQuestions.length;
+
+      game.removeCustomQuestion(id);
+      expect(game.customQuestions, isEmpty);
+      expect(game.eligibleQuestions.length, withCustom - 1);
+
+      game.removeCustomQuestion('does-not-exist');
+      expect(game.customQuestions, isEmpty, reason: 'unknown id is a no-op');
+    });
+
+    test('a game can be played entirely on custom questions', () async {
+      final game = await readyGame(couples: 1, questionsPerPlayer: 3);
+      for (final category in QuestionCategory.values) {
+        if (category != QuestionCategory.custom &&
+            game.settings.categories.contains(category)) {
+          game.toggleCategory(category);
+        }
+      }
+      for (var i = 0; i < 6; i++) {
+        game.addCustomQuestion(
+          selfPrompt: 'Custom question $i?',
+          partnerPrompt: "{name}'s custom question $i?",
+        );
+      }
+
+      expect(game.settings.categories, {QuestionCategory.custom});
+      expect(game.hasEnoughQuestions, isTrue);
+      expect(game.canStartGame, isTrue);
+
+      game.startGame(random: Random(31));
+      expect(game.turns, hasLength(6));
+      expect(
+        game.turns.every((t) => t.question.category == QuestionCategory.custom),
+        isTrue,
+      );
+      // The invariant still holds for questions the players wrote.
+      final a = game.turns
+          .where((t) => t.answerer.id == game.couples.single.partnerA.id)
+          .map((t) => t.question.id)
+          .toSet();
+      final b = game.turns
+          .where((t) => t.answerer.id == game.couples.single.partnerB.id)
+          .map((t) => t.question.id)
+          .toSet();
+      expect(a.intersection(b), isEmpty);
+    });
+
+    test('too few custom questions alone blocks the start', () async {
+      final game = await readyGame(couples: 1, questionsPerPlayer: 3);
+      for (final category in QuestionCategory.values) {
+        if (category != QuestionCategory.custom &&
+            game.settings.categories.contains(category)) {
+          game.toggleCategory(category);
+        }
+      }
+      game.addCustomQuestion(
+        selfPrompt: 'Only one?',
+        partnerPrompt: 'Only one for {name}?',
+      );
+
+      expect(game.hasEnoughQuestions, isFalse);
+      expect(game.canStartGame, isFalse);
+    });
+
+    test('they survive across games in the session', () async {
+      final game = await readyGame(couples: 2, questionsPerPlayer: 2);
+      game.addCustomQuestion(
+        selfPrompt: 'Do you snore?',
+        partnerPrompt: 'Does {name} snore?',
+      );
+      game.startGame(random: Random(32));
+      game.quitToHome();
+      expect(game.customQuestions, hasLength(1));
+      game.newGame();
+      expect(game.customQuestions, hasLength(1));
     });
   });
 }

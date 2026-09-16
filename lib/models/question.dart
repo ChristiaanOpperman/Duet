@@ -6,7 +6,11 @@ enum QuestionCategory {
   favourites('favourites', 'Favourites', Icons.favorite_rounded),
   habits('habits', 'Habits & Quirks', Icons.psychology_alt_rounded),
   history('history', 'Our History', Icons.auto_stories_rounded),
-  wouldYouRather('would_you_rather', 'Would You Rather', Icons.shuffle_rounded);
+  wouldYouRather('would_you_rather', 'Would You Rather', Icons.shuffle_rounded),
+
+  /// Questions written by the players during this session. Never present in
+  /// the bundled pack — the chip only appears once something has been added.
+  custom('custom', 'Your Own', Icons.edit_note_rounded);
 
   const QuestionCategory(this.id, this.label, this.icon);
 

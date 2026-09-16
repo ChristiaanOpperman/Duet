@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'screens/answer_entry_screen.dart';
+import 'screens/custom_questions_screen.dart';
 import 'screens/guess_screen.dart';
 import 'screens/handoff_screen.dart';
 import 'screens/home_screen.dart';
@@ -106,6 +107,7 @@ class _PhaseRouter extends StatelessWidget {
         GamePhase.howToPlay => const HowToPlayScreen(),
         GamePhase.setupCouples => const SetupCouplesScreen(),
         GamePhase.setupOptions => const SetupOptionsScreen(),
+        GamePhase.customQuestions => const CustomQuestionsScreen(),
         GamePhase.answerHandoff => const HandoffScreen(mode: HandoffMode.answer),
         GamePhase.answering => const AnswerEntryScreen(),
         GamePhase.guessHandoff => const HandoffScreen(mode: HandoffMode.guess),

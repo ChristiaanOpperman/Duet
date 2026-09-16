@@ -103,6 +103,11 @@ class SetupOptionsScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(height: Insets.m),
+          _CustomQuestionsRow(
+            count: game.customQuestions.length,
+            onTap: game.goToCustomQuestions,
+          ),
+          const SizedBox(height: Insets.m),
           QuizCard(
             colour: AppColors.surface,
             child: Column(
@@ -115,11 +120,13 @@ class SetupOptionsScreen extends StatelessWidget {
                   runSpacing: Insets.s,
                   children: [
                     for (final category in QuestionCategory.values)
-                      _CategoryChip(
-                        category: category,
-                        selected: settings.categories.contains(category),
-                        onTap: () => game.toggleCategory(category),
-                      ),
+                      if (category != QuestionCategory.custom ||
+                          game.customQuestions.isNotEmpty)
+                          _CategoryChip(
+                          category: category,
+                          selected: settings.categories.contains(category),
+                          onTap: () => game.toggleCategory(category),
+                        ),
                   ],
                 ),
                 const SizedBox(height: Insets.m),
@@ -306,6 +313,67 @@ class _CategoryChip extends StatelessWidget {
                         : AppColors.textSecondary,
                   ),
             ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// Entry point to the custom-question writer. Shows the running count so the
+/// host can see at a glance whether anything has been added.
+class _CustomQuestionsRow extends StatelessWidget {
+  const _CustomQuestionsRow({required this.count, required this.onTap});
+
+  final int count;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return GestureDetector(
+      onTap: onTap,
+      behavior: HitTestBehavior.opaque,
+      child: QuizCard(
+        colour: AppColors.surface,
+        child: Row(
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SectionLabel('Your own questions'),
+                  const SizedBox(height: Insets.xs + 2),
+                  Text(
+                    count == 0
+                        ? 'Write questions just for this group.'
+                        : '$count added · shuffled in with the rest',
+                    style: theme.textTheme.bodyMedium,
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(width: Insets.s),
+            if (count > 0)
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: Insets.s + 2,
+                  vertical: 3,
+                ),
+                decoration: BoxDecoration(
+                  color: AppColors.cyan.withValues(alpha: 0.14),
+                  borderRadius: BorderRadius.circular(Radii.pill),
+                  border: Border.all(color: AppColors.cyan.withValues(alpha: 0.35)),
+                ),
+                child: Text(
+                  '$count',
+                  style: theme.textTheme.labelLarge
+                      ?.copyWith(color: AppColors.cyan, fontSize: 12),
+                ),
+              ),
+            const SizedBox(width: Insets.s),
+            const Icon(Icons.chevron_right_rounded,
+                size: 20, color: AppColors.textMuted),
           ],
         ),
       ),

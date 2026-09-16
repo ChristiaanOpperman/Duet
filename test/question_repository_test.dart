@@ -30,9 +30,19 @@ void main() {
     expect(ids.length, questions.length);
   });
 
-  test('every category is represented', () {
+  test('every bundled category is represented', () {
     final used = questions.map((q) => q.category).toSet();
-    expect(used, containsAll(QuestionCategory.values));
+    final bundled = QuestionCategory.values
+        .where((category) => category != QuestionCategory.custom);
+    expect(used, containsAll(bundled));
+  });
+
+  test('the pack never ships a question in the custom category', () {
+    // `custom` is reserved for questions players write during a session.
+    expect(
+      questions.any((q) => q.category == QuestionCategory.custom),
+      isFalse,
+    );
   });
 
   test('the pack is big enough for a full table at the longest setting', () {

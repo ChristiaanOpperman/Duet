@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/foundation.dart';
 
+import '../data/partner_prompt.dart';
 import '../data/question_dealer.dart';
 import '../data/question_repository.dart';
 import '../models/couple.dart';
@@ -35,6 +36,8 @@ class GameController extends ChangeNotifier {
   GameSettings _settings = const GameSettings();
   List<Couple> _couples = _blankCouples(3);
   List<Question> _pool = const [];
+  final List<Question> _customQuestions = [];
+  int _nextCustomId = 1;
   bool _loading = true;
   Object? _loadError;
 
@@ -82,11 +85,55 @@ class GameController extends ChangeNotifier {
   /// The record the recap screen is currently showing.
   GameRecord? get openRecord => _openRecord;
 
+  /// Questions written by the players this session. In memory only, like the
+  /// game history — closing the app clears them.
+  List<Question> get customQuestions => List.unmodifiable(_customQuestions);
+
+  /// The bundled pack plus anything the table has written.
+  List<Question> get allQuestions => [..._pool, ..._customQuestions];
+
   /// Questions available under the currently selected categories.
   List<Question> get eligibleQuestions => [
-        for (final question in _pool)
+        for (final question in allQuestions)
           if (_settings.categories.contains(question.category)) question,
       ];
+
+  /// Adds a question the players wrote. [partnerPrompt] must carry the
+  /// `{name}` token — without it the presenter cannot say whose answer it
+  /// wants, and the question would be unaskable.
+  void addCustomQuestion({
+    required String selfPrompt,
+    required String partnerPrompt,
+  }) {
+    final self = selfPrompt.trim();
+    final partner = partnerPrompt.trim();
+    if (self.isEmpty || partner.isEmpty) {
+      throw ArgumentError('A custom question needs both prompts');
+    }
+    if (!hasNameToken(partner)) {
+      throw ArgumentError('The partner prompt must contain $nameToken');
+    }
+
+    _customQuestions.add(
+      Question(
+        id: 'custom-${_nextCustomId++}',
+        category: QuestionCategory.custom,
+        selfPrompt: self,
+        partnerPrompt: partner,
+      ),
+    );
+    // A question added while the category is off would silently never appear.
+    _settings = _settings.copyWith(
+      categories: {..._settings.categories, QuestionCategory.custom},
+    );
+    notifyListeners();
+  }
+
+  void removeCustomQuestion(String id) {
+    final before = _customQuestions.length;
+    _customQuestions.removeWhere((question) => question.id == id);
+    if (_customQuestions.length != before) notifyListeners();
+  }
 
   /// A game needs two non-overlapping sets for every couple.
   bool get hasEnoughQuestions =>
@@ -164,6 +211,7 @@ class GameController extends ChangeNotifier {
   void showHowToPlay() => _setPhase(GamePhase.howToPlay);
   void goToCouplesSetup() => _setPhase(GamePhase.setupCouples);
   void goToOptionsSetup() => _setPhase(GamePhase.setupOptions);
+  void goToCustomQuestions() => _setPhase(GamePhase.customQuestions);
 
   /// Opens a recap, remembering where to go back to.
   void showRecap(GameRecord record) {

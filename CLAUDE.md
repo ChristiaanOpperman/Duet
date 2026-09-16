@@ -106,6 +106,33 @@ favourite nut?"). `QuestionRepository` parses strictly and throws on a bad
 entry rather than skipping it. Categories are keyed by the ids in
 `QuestionCategory`; adding a category means adding an enum value.
 
+`QuestionCategory.custom` is reserved for questions players write during a
+session — the bundled pack must never use it, and a repository test enforces
+that. The chip for it only appears on the options screen once something has
+been written.
+
+### Custom questions
+
+`GameController` holds `_customQuestions` in memory for the session, merged
+into `allQuestions` and therefore into `eligibleQuestions` and the deal.
+`addCustomQuestion` rejects a partner prompt with no `{name}` token — the
+presenter would have no way to say whose answer it wants — and switches the
+`custom` category on, since a question added while its category is off would
+silently never appear.
+
+`derivePartnerPrompt` (`lib/data/partner_prompt.dart`) writes the second voice
+from the first: "What is your favourite nut?" → "What is {name}'s favourite
+nut?". Two things matter about it:
+
+- It is a **suggestion**, never applied silently. The screen shows it in an
+  editable field with a live preview using a real player's name, and stops
+  overwriting once the author edits it by hand.
+- Only the *first* pronoun becomes the name; later ones become "they"/"their".
+  Naming someone twice reads like a form letter ("What does Alex do when Alex
+  cannot sleep?"). This is why it is a single left-to-right scan over one
+  combined regex rather than a `replaceAll` per rule — a per-rule pass cannot
+  know what an earlier rule already replaced.
+
 ## Styling
 
 Design tokens live in `lib/theme/` and screens should reach for them rather than
@@ -130,6 +157,8 @@ Layout is phone-first; `GradientScaffold` caps content at
 - `test/game_controller_test.dart` — phase machine and scoring, driven through
   full playthroughs with a fake repository, plus a `session history` group
   covering archiving, partial games and recap navigation.
+- `test/partner_prompt_test.dart` — the first-person to second-person rules,
+  including that the name appears exactly once.
 - `test/question_dealer_test.dart` — the two dealing invariants.
 - `test/question_repository_test.dart` — the real bundled pack parses and every
   question has both voices.

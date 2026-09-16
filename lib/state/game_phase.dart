@@ -11,6 +11,9 @@ enum GamePhase {
   /// Questions per player, points, categories.
   setupOptions,
 
+  /// Writing your own questions for this session.
+  customQuestions,
+
   /// "Pass the phone to Alex" — privacy gate before secret answers.
   answerHandoff,
 
