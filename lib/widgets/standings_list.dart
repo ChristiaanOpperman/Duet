@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../state/game_controller.dart';
+import '../models/standing.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_gradients.dart';
 import '../theme/app_theme.dart';
@@ -107,9 +107,10 @@ class _StandingRow extends StatelessWidget {
                 child: CoupleChip(
                   couple: standing.couple,
                   index: standing.index,
+                  avatarSize: 34,
                 ),
               ),
-              const SizedBox(width: Insets.s),
+              const SizedBox(width: Insets.xs),
               ScorePill(points: standing.points),
             ],
           ),

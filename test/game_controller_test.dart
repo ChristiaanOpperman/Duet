@@ -263,6 +263,163 @@ void main() {
     expect(game.isLoading, isFalse);
     expect(game.loadError, isNotNull);
   });
+
+  group('session history', () {
+    /// Plays the guessing rounds to the results screen, judging with [verdict].
+    void playOut(GameController game, bool Function(int index) verdict) {
+      var index = 0;
+      var guard = 0;
+      while (game.phase != GamePhase.results) {
+        expect(guard++, lessThan(500));
+        switch (game.phase) {
+          case GamePhase.guessHandoff:
+            game.beginGuessing();
+          case GamePhase.guessing:
+            game.submitGuess('guess-$index');
+          case GamePhase.reveal:
+            game.judge(correct: verdict(index++));
+            game.advanceAfterReveal();
+          case GamePhase.scoreboard:
+            game.continueFromScoreboard();
+          default:
+            fail('unexpected phase ${game.phase}');
+        }
+      }
+    }
+
+    test('starts empty', () async {
+      final game = await readyGame();
+      expect(game.hasHistory, isFalse);
+      expect(game.history, isEmpty);
+    });
+
+    test('a finished game is archived with its answers and guesses', () async {
+      final game = await readyGame(couples: 2, questionsPerPlayer: 2);
+      game.startGame(random: Random(11));
+      answerEverything(game);
+      playOut(game, (i) => i.isEven);
+
+      expect(game.history, hasLength(1));
+      final record = game.history.single;
+      expect(record.number, 1);
+      expect(record.isComplete, isTrue);
+      expect(record.turns, hasLength(8));
+      for (final turn in record.turns) {
+        expect(turn.answer, isNotEmpty);
+        expect(turn.guess, isNotEmpty);
+        expect(turn.isJudged, isTrue);
+      }
+      expect(record.correctCount, 4);
+      expect(record.questionsPerPlayer, 2);
+      expect(record.pointsPerCorrect, game.settings.pointsPerCorrect);
+    });
+
+    test('the record scores exactly like the live game did', () async {
+      final game = await readyGame(couples: 3, questionsPerPlayer: 2);
+      game.startGame(random: Random(12));
+      answerEverything(game);
+      final live = [for (final s in game.standings) s.points];
+      playOut(game, (i) => i % 3 != 0);
+
+      final record = game.history.single;
+      expect(
+        [for (final s in record.standings) s.points],
+        [for (final s in game.standings) s.points],
+      );
+      expect(live.every((points) => points == 0), isTrue,
+          reason: 'sanity: nothing was scored before the guessing rounds');
+    });
+
+    test('reaching results archives once, not again on play again', () async {
+      final game = await readyGame(couples: 2, questionsPerPlayer: 2);
+      game.startGame(random: Random(13));
+      answerEverything(game);
+      playOut(game, (_) => true);
+
+      expect(game.history, hasLength(1));
+      game.playAgain();
+      expect(game.history, hasLength(1), reason: 'no duplicate archive');
+    });
+
+    test('play again keeps the finished game readable', () async {
+      final game = await readyGame(couples: 2, questionsPerPlayer: 2);
+      game.startGame(random: Random(14));
+      answerEverything(game);
+      playOut(game, (_) => true);
+      final firstAnswers = [for (final t in game.history.single.turns) t.answer];
+
+      game.playAgain();
+      answerEverything(game);
+
+      // The new game has blank guesses, but the archived one is untouched.
+      expect(game.turns.every((t) => t.guess.isEmpty), isTrue);
+      expect([for (final t in game.history.single.turns) t.answer],
+          firstAnswers);
+      expect(game.history.single.turns.every((t) => t.isJudged), isTrue);
+    });
+
+    test('two games this session produce two records, newest first', () async {
+      final game = await readyGame(couples: 2, questionsPerPlayer: 2);
+      game.startGame(random: Random(15));
+      answerEverything(game);
+      playOut(game, (_) => true);
+      game.playAgain();
+      answerEverything(game);
+      playOut(game, (_) => false);
+
+      expect(game.history, hasLength(2));
+      expect(game.history.first.number, 2, reason: 'newest first');
+      expect(game.history.last.number, 1);
+      expect(game.history.first.correctCount, 0);
+      expect(game.history.last.correctCount, 8);
+    });
+
+    test('quitting midway archives a partial game', () async {
+      final game = await readyGame(couples: 2, questionsPerPlayer: 3);
+      game.startGame(random: Random(16));
+      answerEverything(game);
+      game.beginGuessing();
+      game.submitGuess('only one');
+      game.judge(correct: true);
+      game.advanceAfterReveal();
+      game.quitToHome();
+
+      expect(game.history, hasLength(1));
+      final record = game.history.single;
+      expect(record.isComplete, isFalse);
+      expect(record.playedTurns, hasLength(1));
+      expect(record.turns, hasLength(12), reason: 'unplayed turns are kept');
+    });
+
+    test('a game nobody judged is not archived', () async {
+      final game = await readyGame();
+      game.startGame(random: Random(17));
+      answerEverything(game);
+      game.quitToHome();
+      expect(game.history, isEmpty);
+    });
+
+    test('the recap returns to wherever it was opened from', () async {
+      final game = await readyGame(couples: 2, questionsPerPlayer: 2);
+      game.startGame(random: Random(18));
+      answerEverything(game);
+      playOut(game, (_) => true);
+
+      expect(game.phase, GamePhase.results);
+      game.showRecap(game.history.single);
+      expect(game.phase, GamePhase.recap);
+      expect(game.openRecord, isNotNull);
+
+      game.closeRecap();
+      expect(game.phase, GamePhase.results);
+      expect(game.openRecord, isNull);
+
+      game.quitToHome();
+      game.showRecap(game.history.single);
+      game.closeRecap();
+      expect(game.phase, GamePhase.home, reason: 'back to home this time');
+    });
+  });
 }
 
 class _BrokenRepository extends QuestionRepository {

@@ -5,34 +5,15 @@ import 'package:flutter/foundation.dart';
 import '../data/question_dealer.dart';
 import '../data/question_repository.dart';
 import '../models/couple.dart';
+import '../models/game_record.dart';
 import '../models/game_settings.dart';
 import '../models/player.dart';
 import '../models/question.dart';
+import '../models/standing.dart';
 import '../models/turn.dart';
 import 'game_phase.dart';
 
-/// A couple's line on the scoreboard.
-class Standing {
-  const Standing({
-    required this.couple,
-    required this.index,
-    required this.points,
-    required this.correct,
-    required this.judged,
-    required this.total,
-  });
-
-  final Couple couple;
-
-  /// Setup position, which fixes the couple's colour.
-  final int index;
-  final int points;
-  final int correct;
-
-  /// How many of this couple's turns have been judged so far.
-  final int judged;
-  final int total;
-}
+export '../models/standing.dart' show Standing;
 
 /// The whole game: setup, secret answers, guessing rounds, scoring.
 ///
@@ -40,10 +21,15 @@ class Standing {
 /// restart begins a fresh game. The source of truth is [_turns]; scores and
 /// progress are derived from it rather than tracked separately.
 class GameController extends ChangeNotifier {
-  GameController({QuestionRepository? repository})
-      : _repository = repository ?? QuestionRepository();
+  GameController({QuestionRepository? repository, DateTime Function()? now})
+      : _repository = repository ?? QuestionRepository(),
+        _now = now ?? DateTime.now;
 
   final QuestionRepository _repository;
+
+  /// Injectable so tests get a fixed timestamp — a real clock in an archived
+  /// record makes the recap screen impossible to golden.
+  final DateTime Function() _now;
 
   GamePhase _phase = GamePhase.home;
   GameSettings _settings = const GameSettings();
@@ -53,6 +39,10 @@ class GameController extends ChangeNotifier {
   Object? _loadError;
 
   List<Turn> _turns = [];
+  final List<GameRecord> _history = [];
+  bool _currentGameArchived = false;
+  GameRecord? _openRecord;
+  GamePhase _recapReturnPhase = GamePhase.home;
   Map<String, List<Turn>> _turnsByAnswerer = {};
   List<Player> _answerOrder = [];
   int _answererIndex = 0;
@@ -82,6 +72,15 @@ class GameController extends ChangeNotifier {
   GameSettings get settings => _settings;
   List<Couple> get couples => List.unmodifiable(_couples);
   List<Turn> get turns => List.unmodifiable(_turns);
+
+  /// Games played this session, newest first. In memory only — closing the app
+  /// discards them.
+  List<GameRecord> get history => List.unmodifiable(_history.reversed);
+
+  bool get hasHistory => _history.isNotEmpty;
+
+  /// The record the recap screen is currently showing.
+  GameRecord? get openRecord => _openRecord;
 
   /// Questions available under the currently selected categories.
   List<Question> get eligibleQuestions => [
@@ -166,6 +165,20 @@ class GameController extends ChangeNotifier {
   void goToCouplesSetup() => _setPhase(GamePhase.setupCouples);
   void goToOptionsSetup() => _setPhase(GamePhase.setupOptions);
 
+  /// Opens a recap, remembering where to go back to.
+  void showRecap(GameRecord record) {
+    _openRecord = record;
+    _recapReturnPhase = _phase;
+    _phase = GamePhase.recap;
+    notifyListeners();
+  }
+
+  void closeRecap() {
+    _openRecord = null;
+    _phase = _recapReturnPhase;
+    notifyListeners();
+  }
+
   void _setPhase(GamePhase phase) {
     if (_phase == phase) return;
     _phase = phase;
@@ -212,6 +225,7 @@ class GameController extends ChangeNotifier {
     _answererIndex = 0;
     _answerQuestionIndex = 0;
     _turnIndex = 0;
+    _currentGameArchived = false;
     _phase = GamePhase.answerHandoff;
     notifyListeners();
   }
@@ -313,6 +327,7 @@ class GameController extends ChangeNotifier {
     final next = _turnIndex + 1;
 
     if (next >= _turns.length) {
+      _archiveCurrentGame();
       _phase = GamePhase.results;
       notifyListeners();
       return;
@@ -348,28 +363,11 @@ class GameController extends ChangeNotifier {
       .where((turn) => turn.coupleId == coupleId && turn.correct == true)
       .length;
 
-  List<Standing> get standings {
-    final rows = [
-      for (var index = 0; index < _couples.length; index++)
-        () {
-          final couple = _couples[index];
-          final own = _turns.where((t) => t.coupleId == couple.id);
-          return Standing(
-            couple: couple,
-            index: index,
-            points: pointsFor(couple.id),
-            correct: correctFor(couple.id),
-            judged: own.where((t) => t.isJudged).length,
-            total: own.length,
-          );
-        }(),
-    ];
-    rows.sort((a, b) {
-      final byPoints = b.points.compareTo(a.points);
-      return byPoints != 0 ? byPoints : a.index.compareTo(b.index);
-    });
-    return rows;
-  }
+  List<Standing> get standings => computeStandings(
+        couples: _couples,
+        turns: _turns,
+        pointsPerCorrect: _settings.pointsPerCorrect,
+      );
 
   Standing? get winner {
     final rows = standings;
@@ -385,22 +383,46 @@ class GameController extends ChangeNotifier {
 
   // ---------------------------------------------------------------- restart
 
-  /// Same couples and settings, freshly dealt questions.
+  /// Same couples and settings, freshly dealt questions. The finished game is
+  /// archived first so "play again" never destroys what just happened.
   void playAgain() {
+    _archiveCurrentGame();
     startGame();
   }
 
   /// Back to the couples screen, keeping the names already entered.
   void newGame() {
+    _archiveCurrentGame();
     _clearRound();
     _phase = GamePhase.setupCouples;
     notifyListeners();
   }
 
   void quitToHome() {
+    _archiveCurrentGame();
     _clearRound();
     _phase = GamePhase.home;
     notifyListeners();
+  }
+
+  /// Snapshots the current game into the session history. Idempotent, so
+  /// reaching the results screen and then tapping "play again" archives once.
+  /// A game nobody has judged a single answer in isn't worth keeping.
+  void _archiveCurrentGame() {
+    if (_currentGameArchived) return;
+    if (!_turns.any((turn) => turn.isJudged)) return;
+
+    _history.add(
+      GameRecord(
+        number: _history.length + 1,
+        playedAt: _now(),
+        couples: List.unmodifiable(_couples),
+        turns: List.unmodifiable(_turns),
+        pointsPerCorrect: _settings.pointsPerCorrect,
+        questionsPerPlayer: _settings.questionsPerPlayer,
+      ),
+    );
+    _currentGameArchived = true;
   }
 
   void _clearRound() {

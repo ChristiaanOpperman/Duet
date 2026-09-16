@@ -11,6 +11,11 @@ the couple, not the player.
 Built in Flutter with no dependencies beyond the SDK: offline, no accounts, no
 backend.
 
+Every game you finish stays available for the rest of the app session — tap it
+on the home screen to review each question, what everyone answered, and what
+their partner guessed. It is held in memory only: closing the app clears it,
+and nothing is ever written to disk or sent anywhere.
+
 ## Running it
 
 ```bash

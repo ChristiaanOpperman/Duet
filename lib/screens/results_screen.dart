@@ -35,6 +35,15 @@ class ResultsScreen extends StatelessWidget {
                 onPressed: game.playAgain,
               ),
               const SizedBox(height: Insets.s),
+              GhostButton(
+                label: 'Review every answer',
+                icon: Icons.history_rounded,
+                onPressed: () {
+                  final record = game.history.firstOrNull;
+                  if (record != null) game.showRecap(record);
+                },
+              ),
+              const SizedBox(height: Insets.s),
               Row(
                 children: [
                   Expanded(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../models/game_record.dart';
 import '../state/game_scope.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_theme.dart';
@@ -74,6 +75,10 @@ class HomeScreen extends StatelessWidget {
             )
           else
             const _HowItWorksStrip(),
+          if (game.hasHistory) ...[
+            const SizedBox(height: Insets.l),
+            const _SessionHistory(),
+          ],
           const Spacer(),
         ],
       ),
@@ -120,6 +125,107 @@ class _HowItWorksStrip extends StatelessWidget {
             ),
           ),
       ],
+    );
+  }
+}
+
+/// Games played since the app opened. Kept in memory only, so the card
+/// disappears when the app is closed — the copy says so rather than implying
+/// a saved history.
+class _SessionHistory extends StatelessWidget {
+  const _SessionHistory();
+
+  @override
+  Widget build(BuildContext context) {
+    final game = GameScope.of(context);
+    final theme = Theme.of(context);
+    final history = game.history;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            const SectionLabel('This session'),
+            const Spacer(),
+            Text(
+              'Cleared when you close the app',
+              style: theme.textTheme.bodyMedium
+                  ?.copyWith(color: AppColors.textMuted, fontSize: 12),
+            ),
+          ],
+        ),
+        const SizedBox(height: Insets.s + 4),
+        for (final record in history.take(3))
+          Padding(
+            padding: const EdgeInsets.only(bottom: Insets.s),
+            child: _HistoryRow(
+              record: record,
+              onTap: () => game.showRecap(record),
+            ),
+          ),
+      ],
+    );
+  }
+}
+
+class _HistoryRow extends StatelessWidget {
+  const _HistoryRow({required this.record, required this.onTap});
+
+  final GameRecord record;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final winner = record.winner;
+
+    return GestureDetector(
+      onTap: onTap,
+      behavior: HitTestBehavior.opaque,
+      child: QuizCard(
+        colour: AppColors.surface,
+        padding: const EdgeInsets.symmetric(
+          horizontal: Insets.m,
+          vertical: Insets.s + 4,
+        ),
+        radius: Radii.button,
+        child: Row(
+          children: [
+            Icon(
+              record.isComplete
+                  ? Icons.emoji_events_rounded
+                  : Icons.pause_circle_outline_rounded,
+              size: 18,
+              color: record.isComplete ? AppColors.gold : AppColors.textMuted,
+            ),
+            const SizedBox(width: Insets.s + 4),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Game ${record.number}',
+                    style: theme.textTheme.titleMedium,
+                  ),
+                  Text(
+                    winner == null
+                        ? 'No result'
+                        : record.isDraw
+                            ? 'Tied on ${winner.points}'
+                            : '${winner.couple.displayName} · '
+                                '${winner.points} pts',
+                    style: theme.textTheme.bodyMedium,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
+              ),
+            ),
+            const Icon(Icons.chevron_right_rounded,
+                size: 20, color: AppColors.textMuted),
+          ],
+        ),
+      ),
     );
   }
 }

@@ -9,8 +9,9 @@ play. Each player privately answers questions about themselves, then the device
 becomes a presenter and asks their partner to guess those answers. The host
 judges each guess and points go to the couple.
 
-Single Flutter app, no backend, no network, no persistence — a game lives in
-memory for one sitting.
+Single Flutter app, no backend, no network, no database. Finished games are
+kept **in memory for the app session only** so they can be reviewed; closing
+the app discards everything.
 
 ## Commands
 
@@ -65,6 +66,26 @@ partner, the between-couples scoreboard, or the results.
 `Turn` is deliberately mutable — it is filled in across two phases of one
 session, not a value type.
 
+### Session history
+
+`GameController._history` holds a `GameRecord` (`lib/models/game_record.dart`)
+per game played since launch, newest first via the `history` getter.
+`_archiveCurrentGame()` snapshots the current game and is called on reaching
+results, on `playAgain`, `newGame` and `quitToHome`. It is idempotent (guarded
+by `_currentGameArchived`, reset in `startGame`) and skips games where nothing
+was ever judged.
+
+A record captures the turn list **by reference**, which is only safe because
+`startGame` always builds a brand new list — never reuse or mutate `_turns` in
+place, or archived games will silently change.
+
+This history is deliberately **not persisted**. There is no disk write and no
+storage plugin; the home screen copy ("Cleared when you close the app") says so
+to the user. Adding real persistence means adding a dependency — see Platforms.
+
+Scoring lives in `computeStandings()` (`lib/models/standing.dart`) so the live
+game and an archived record can never disagree.
+
 ### Question dealing
 
 Each player gets their **own** questions (`lib/data/question_dealer.dart`). Two
@@ -107,7 +128,8 @@ Layout is phone-first; `GradientScaffold` caps content at
 ## Tests
 
 - `test/game_controller_test.dart` — phase machine and scoring, driven through
-  full playthroughs with a fake repository.
+  full playthroughs with a fake repository, plus a `session history` group
+  covering archiving, partial games and recap navigation.
 - `test/question_dealer_test.dart` — the two dealing invariants.
 - `test/question_repository_test.dart` — the real bundled pack parses and every
   question has both voices.

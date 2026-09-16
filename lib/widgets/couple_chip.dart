@@ -58,30 +58,35 @@ class CoupleChip extends StatelessWidget {
     required this.couple,
     required this.index,
     this.trailing,
+    this.avatarSize = 40,
   });
 
   final Couple couple;
   final int index;
   final Widget? trailing;
 
+  /// Shrunk in tight rows (the scoreboard) so long pairs of names still fit
+  /// before the ellipsis kicks in.
+  final double avatarSize;
+
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         SizedBox(
-          width: 70,
-          height: 40,
+          width: avatarSize * 1.75,
+          height: avatarSize,
           child: Stack(
             children: [
               PlayerAvatar(
                 name: couple.partnerA.name,
                 coupleIndex: index,
-                size: 40,
+                size: avatarSize,
               ),
               // Overlap only the outer edge — enough to read as a pair without
               // covering the first partner's initial.
               Positioned(
-                left: 30,
+                left: avatarSize * 0.75,
                 child: Container(
                   decoration: const BoxDecoration(
                     shape: BoxShape.circle,
@@ -92,14 +97,14 @@ class CoupleChip extends StatelessWidget {
                   child: PlayerAvatar(
                     name: couple.partnerB.name,
                     coupleIndex: index,
-                    size: 40,
+                    size: avatarSize,
                   ),
                 ),
               ),
             ],
           ),
         ),
-        const SizedBox(width: Insets.m),
+        const SizedBox(width: Insets.s + 4),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

@@ -31,4 +31,8 @@ enum GamePhase {
 
   /// Final podium.
   results,
+
+  /// Reviewing a finished game from this session's history: every question,
+  /// what was answered, what was guessed.
+  recap,
 }

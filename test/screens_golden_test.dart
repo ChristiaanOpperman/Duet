@@ -7,6 +7,7 @@ import 'package:duet/models/question.dart';
 import 'package:duet/state/game_controller.dart';
 import 'package:duet/state/game_phase.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 /// Renders every screen at phone size and compares it against a checked-in
@@ -26,7 +27,10 @@ void main() {
     int couples = 3,
     int questionsPerPlayer = 3,
   }) async {
-    final controller = GameController(repository: _PreloadedRepository(pack));
+    final controller = GameController(
+      repository: _PreloadedRepository(pack),
+      now: () => DateTime(2026, 9, 16, 20, 15),
+    );
     await controller.init();
     controller.setCoupleCount(couples);
     controller.setQuestionsPerPlayer(questionsPerPlayer);
@@ -45,21 +49,25 @@ void main() {
   }
 
   /// Fills in every secret answer so the game reaches the guessing rounds.
+  /// Answers are varied so the recap screenshot shows real-looking content
+  /// rather than the same word twenty times.
   void answerEverything(GameController controller) {
+    var i = 0;
     while (controller.phase != GamePhase.guessHandoff) {
       if (controller.phase == GamePhase.answerHandoff) {
         controller.beginAnswering();
         continue;
       }
-      controller.submitAnswer('Macadamia');
+      controller.submitAnswer(_answers[i++ % _answers.length]);
     }
   }
 
   Future<void> shoot(
     WidgetTester tester,
     GameController controller,
-    String name,
-  ) async {
+    String name, {
+    double scroll = 0,
+  }) async {
     tester.view.physicalSize = const Size(780, 1688);
     tester.view.devicePixelRatio = 2;
     addTearDown(tester.view.reset);
@@ -70,6 +78,12 @@ void main() {
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 1200));
     await tester.pump(const Duration(milliseconds: 1200));
+
+    if (scroll != 0) {
+      await tester.drag(find.byType(ListView).last, Offset(0, -scroll));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 600));
+    }
 
     await expectLater(
       find.byType(DuetApp),
@@ -151,6 +165,33 @@ void main() {
     await shoot(tester, controller, 'scoreboard');
   });
 
+  testWidgets('recap of a finished game', (tester) async {
+    final controller = await game();
+    controller.startGame(random: Random(1));
+    answerEverything(controller);
+    _playUntil(controller, GamePhase.results);
+    controller.showRecap(controller.history.first);
+    await shoot(tester, controller, 'recap');
+  });
+
+  testWidgets('recap scrolled to the answers', (tester) async {
+    final controller = await game();
+    controller.startGame(random: Random(1));
+    answerEverything(controller);
+    _playUntil(controller, GamePhase.results);
+    controller.showRecap(controller.history.first);
+    await shoot(tester, controller, 'recap_answers', scroll: 1100);
+  });
+
+  testWidgets('home with session history', (tester) async {
+    final controller = await game();
+    controller.startGame(random: Random(1));
+    answerEverything(controller);
+    _playUntil(controller, GamePhase.results);
+    controller.quitToHome();
+    await shoot(tester, controller, 'home_with_history');
+  });
+
   testWidgets('results', (tester) async {
     final controller = await game();
     controller.startGame(random: Random(1));
@@ -159,6 +200,29 @@ void main() {
     await shoot(tester, controller, 'results');
   });
 }
+
+const _answers = [
+  'Macadamia',
+  'Pistachio',
+  'Rocky road',
+  'Left side, always',
+  'Three times',
+  'Salt and vinegar',
+  'The mountains',
+  'Sunday morning',
+  'Flat white',
+  'Camping, obviously',
+];
+
+const _guesses = [
+  'Macadamia',
+  'Cashew',
+  'Rocky road',
+  'The right side',
+  'Twice',
+  'Salt and vinegar',
+  'The beach',
+];
 
 /// Plays the guessing rounds, marking a mix of right and wrong, until the
 /// game reaches [target].
@@ -171,7 +235,7 @@ void _playUntil(GameController controller, GamePhase target) {
       case GamePhase.guessHandoff:
         controller.beginGuessing();
       case GamePhase.guessing:
-        controller.submitGuess('Macadamia');
+        controller.submitGuess(_guesses[guard % _guesses.length]);
       case GamePhase.reveal:
         controller.judge(correct: judged++ % 3 != 0);
         controller.advanceAfterReveal();
