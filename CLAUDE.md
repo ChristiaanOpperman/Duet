@@ -122,12 +122,27 @@ when the pool runs dry do different couples start sharing.
 
 ### The question pack
 
-`assets/questions/questions.json` — 92 questions, plain JSON so they can be
+`assets/questions/questions.json` — 167 questions, plain JSON so they can be
 edited by hand. Every entry needs two voices: `selfPrompt` ("What is your
 favourite nut?") and `partnerPrompt` with a `{name}` slot ("What is {name}'s
 favourite nut?"). `QuestionRepository` parses strictly and throws on a bad
 entry rather than skipping it. Categories are keyed by the ids in
 `QuestionCategory`; adding a category means adding an enum value.
+
+Seven bundled categories: Favourites, Habits & Quirks, Our History, Would You
+Rather, Just for Fun, Deep & Meaningful and Spice. **Spice is the only one off
+by default** — it is bedroom-flavoured and a host should opt in rather than
+discover it with the in-laws at the table. `GameSettings.categories` omits it
+and a test enforces that.
+
+A handful of questions in each category are South African — braai sides,
+padkos, Ouma rusks, load shedding, Klippies and Coke, coast-versus-bushveld
+holidays. It is a light seasoning by design, roughly one question in six; keep
+it that way when adding more so the pack still plays anywhere.
+
+Two tests guard the pack's size: every category alone holds enough for six
+couples at seven questions each (`QuestionDealer.minimumPoolSize(7)`), so a
+host can pick a single category and still start.
 
 `QuestionCategory.custom` is reserved for questions players write during a
 session — the bundled pack must never use it, and a repository test enforces

@@ -432,7 +432,11 @@ void main() {
     test('start empty and are added to the pool', () async {
       final game = await readyGame();
       expect(game.customQuestions, isEmpty);
-      final before = game.eligibleQuestions.length;
+      // These two differ: spice is off by default, so the eligible pool is
+      // smaller than everything the app knows about.
+      final eligibleBefore = game.eligibleQuestions.length;
+      final allBefore = game.allQuestions.length;
+      expect(eligibleBefore, lessThan(allBefore));
 
       game.addCustomQuestion(
         selfPrompt: 'What is your favourite nut?',
@@ -440,8 +444,8 @@ void main() {
       );
 
       expect(game.customQuestions, hasLength(1));
-      expect(game.eligibleQuestions.length, before + 1);
-      expect(game.allQuestions.length, before + 1);
+      expect(game.eligibleQuestions.length, eligibleBefore + 1);
+      expect(game.allQuestions.length, allBefore + 1);
     });
 
     test('are trimmed and given unique ids', () async {

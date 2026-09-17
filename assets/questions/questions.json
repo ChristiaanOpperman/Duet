@@ -552,6 +552,456 @@
       "category": "would_you_rather",
       "selfPrompt": "Would you rather lose your sense of taste or your sense of smell?",
       "partnerPrompt": "Would {name} rather lose their sense of taste or their sense of smell?"
+    },
+    {
+      "id": "fun-useless-talent",
+      "category": "fun",
+      "selfPrompt": "What's your most useless talent?",
+      "partnerPrompt": "What's {name}'s most useless talent?"
+    },
+    {
+      "id": "fun-worst-haircut",
+      "category": "fun",
+      "selfPrompt": "What's the worst haircut you've ever had?",
+      "partnerPrompt": "What's the worst haircut {name} has ever had?"
+    },
+    {
+      "id": "fun-karaoke",
+      "category": "fun",
+      "selfPrompt": "What's your karaoke song?",
+      "partnerPrompt": "What's {name}'s karaoke song?"
+    },
+    {
+      "id": "fun-search-history",
+      "category": "fun",
+      "selfPrompt": "What's the most embarrassing thing in your search history?",
+      "partnerPrompt": "What's the most embarrassing thing in {name}'s search history?"
+    },
+    {
+      "id": "fun-reality-show",
+      "category": "fun",
+      "selfPrompt": "What would your reality TV show be called?",
+      "partnerPrompt": "What would {name}'s reality TV show be called?"
+    },
+    {
+      "id": "fun-car-habit",
+      "category": "fun",
+      "selfPrompt": "What's your worst habit in the car?",
+      "partnerPrompt": "What's {name}'s worst habit in the car?"
+    },
+    {
+      "id": "fun-appliance",
+      "category": "fun",
+      "selfPrompt": "If you were a household appliance, which one would you be?",
+      "partnerPrompt": "If {name} were a household appliance, which one would they be?"
+    },
+    {
+      "id": "fun-strangest-eaten",
+      "category": "fun",
+      "selfPrompt": "What's the strangest thing you've ever eaten?",
+      "partnerPrompt": "What's the strangest thing {name} has ever eaten?"
+    },
+    {
+      "id": "fun-dance-move",
+      "category": "fun",
+      "selfPrompt": "What's your go-to dance move?",
+      "partnerPrompt": "What's {name}'s go-to dance move?"
+    },
+    {
+      "id": "fun-lottery-buy",
+      "category": "fun",
+      "selfPrompt": "If you won the lottery tomorrow, what's the first thing you'd buy?",
+      "partnerPrompt": "If {name} won the lottery tomorrow, what would they buy first?"
+    },
+    {
+      "id": "fun-irrational-fear",
+      "category": "fun",
+      "selfPrompt": "What's your most irrational fear?",
+      "partnerPrompt": "What's {name}'s most irrational fear?"
+    },
+    {
+      "id": "fun-school-nickname",
+      "category": "fun",
+      "selfPrompt": "What nickname did you have at school?",
+      "partnerPrompt": "What nickname did {name} have at school?"
+    },
+    {
+      "id": "fun-worst-gift",
+      "category": "fun",
+      "selfPrompt": "What's the worst gift you've ever been given?",
+      "partnerPrompt": "What's the worst gift {name} has ever been given?"
+    },
+    {
+      "id": "fun-who-plays-you",
+      "category": "fun",
+      "selfPrompt": "Who would play you in the film of your life?",
+      "partnerPrompt": "Who would play {name} in the film of their life?"
+    },
+    {
+      "id": "fun-signature-dish",
+      "category": "fun",
+      "selfPrompt": "What's your signature dish?",
+      "partnerPrompt": "What's {name}'s signature dish?"
+    },
+    {
+      "id": "fun-caffeine-count",
+      "category": "fun",
+      "selfPrompt": "How many coffees before you're properly human?",
+      "partnerPrompt": "How many coffees before {name} is properly human?"
+    },
+    {
+      "id": "fun-petty-hill",
+      "category": "fun",
+      "selfPrompt": "What's the pettiest hill you will die on?",
+      "partnerPrompt": "What's the pettiest hill {name} will die on?"
+    },
+    {
+      "id": "fun-last-googled",
+      "category": "fun",
+      "selfPrompt": "What was the last thing you googled?",
+      "partnerPrompt": "What was the last thing {name} googled?"
+    },
+    {
+      "id": "fun-thinks-about",
+      "category": "fun",
+      "selfPrompt": "What do you think about far more often than you should?",
+      "partnerPrompt": "What does {name} think about far more often than they should?"
+    },
+    {
+      "id": "fun-food-opinion",
+      "category": "fun",
+      "selfPrompt": "What's your most controversial food opinion?",
+      "partnerPrompt": "What's {name}'s most controversial food opinion?"
+    },
+    {
+      "id": "fun-braai-side",
+      "category": "fun",
+      "selfPrompt": "What's your ultimate braai side dish?",
+      "partnerPrompt": "What's {name}'s ultimate braai side dish?"
+    },
+    {
+      "id": "fun-padkos",
+      "category": "fun",
+      "selfPrompt": "What's your padkos order for a long road trip?",
+      "partnerPrompt": "What's {name}'s padkos order for a long road trip?"
+    },
+    {
+      "id": "fun-rusks-koeksister",
+      "category": "fun",
+      "selfPrompt": "Ouma rusks or a koeksister with your coffee?",
+      "partnerPrompt": "Would {name} pick Ouma rusks or a koeksister with their coffee?"
+    },
+    {
+      "id": "fun-most-south-african",
+      "category": "fun",
+      "selfPrompt": "What's the most South African thing about you?",
+      "partnerPrompt": "What's the most South African thing about {name}?"
+    },
+    {
+      "id": "fun-boerie-or-sosatie",
+      "category": "fun",
+      "selfPrompt": "Boerewors or sosaties at a braai?",
+      "partnerPrompt": "Does {name} go for boerewors or sosaties at a braai?"
+    },
+    {
+      "id": "deep-most-proud",
+      "category": "deep",
+      "selfPrompt": "What are you most proud of in your life so far?",
+      "partnerPrompt": "What is {name} most proud of in their life so far?"
+    },
+    {
+      "id": "deep-future-fear",
+      "category": "deep",
+      "selfPrompt": "What's your biggest fear about the future?",
+      "partnerPrompt": "What's {name}'s biggest fear about the future?"
+    },
+    {
+      "id": "deep-last-cried",
+      "category": "deep",
+      "selfPrompt": "When did you last cry, and why?",
+      "partnerPrompt": "When did {name} last cry, and why?"
+    },
+    {
+      "id": "deep-need-when-low",
+      "category": "deep",
+      "selfPrompt": "What do you need most from me when you're struggling?",
+      "partnerPrompt": "What does {name} need most from you when they're struggling?"
+    },
+    {
+      "id": "deep-shaped-you",
+      "category": "deep",
+      "selfPrompt": "Who has shaped the person you are most?",
+      "partnerPrompt": "Who has shaped {name} the most?"
+    },
+    {
+      "id": "deep-best-advice",
+      "category": "deep",
+      "selfPrompt": "What's the best advice you've ever been given?",
+      "partnerPrompt": "What's the best advice {name} has ever been given?"
+    },
+    {
+      "id": "deep-home-means",
+      "category": "deep",
+      "selfPrompt": "What does home mean to you?",
+      "partnerPrompt": "What does home mean to {name}?"
+    },
+    {
+      "id": "deep-working-on",
+      "category": "deep",
+      "selfPrompt": "What are you still working on about yourself?",
+      "partnerPrompt": "What is {name} still working on about themselves?"
+    },
+    {
+      "id": "deep-feel-loved",
+      "category": "deep",
+      "selfPrompt": "What makes you feel most loved?",
+      "partnerPrompt": "What makes {name} feel most loved?"
+    },
+    {
+      "id": "deep-quiet-dream",
+      "category": "deep",
+      "selfPrompt": "What's a dream you've quietly put aside?",
+      "partnerPrompt": "What's a dream {name} has quietly put aside?"
+    },
+    {
+      "id": "deep-eighteen-self",
+      "category": "deep",
+      "selfPrompt": "What would you tell your eighteen-year-old self?",
+      "partnerPrompt": "What would {name} tell their eighteen-year-old self?"
+    },
+    {
+      "id": "deep-remembered-for",
+      "category": "deep",
+      "selfPrompt": "What do you want to be remembered for?",
+      "partnerPrompt": "What does {name} want to be remembered for?"
+    },
+    {
+      "id": "deep-hardest-thing",
+      "category": "deep",
+      "selfPrompt": "What's the hardest thing you've been through?",
+      "partnerPrompt": "What's the hardest thing {name} has been through?"
+    },
+    {
+      "id": "deep-most-yourself",
+      "category": "deep",
+      "selfPrompt": "When do you feel most like yourself?",
+      "partnerPrompt": "When does {name} feel most like themselves?"
+    },
+    {
+      "id": "deep-love-language",
+      "category": "deep",
+      "selfPrompt": "What's your love language?",
+      "partnerPrompt": "What's {name}'s love language?"
+    },
+    {
+      "id": "deep-kindest-thing",
+      "category": "deep",
+      "selfPrompt": "What's the kindest thing anyone has ever done for you?",
+      "partnerPrompt": "What's the kindest thing anyone has ever done for {name}?"
+    },
+    {
+      "id": "deep-before-were-old",
+      "category": "deep",
+      "selfPrompt": "What do you most want us to do together before we're old?",
+      "partnerPrompt": "What does {name} most want you to do together before you're old?"
+    },
+    {
+      "id": "deep-risk-glad",
+      "category": "deep",
+      "selfPrompt": "What's a risk you're glad you took?",
+      "partnerPrompt": "What's a risk {name} is glad they took?"
+    },
+    {
+      "id": "deep-knew-you-loved",
+      "category": "deep",
+      "selfPrompt": "When did you know you loved your partner?",
+      "partnerPrompt": "When does {name} say they knew they loved you?"
+    },
+    {
+      "id": "deep-changed-most",
+      "category": "deep",
+      "selfPrompt": "How have you changed most in the last five years?",
+      "partnerPrompt": "How has {name} changed most in the last five years?"
+    },
+    {
+      "id": "deep-3am-worry",
+      "category": "deep",
+      "selfPrompt": "What do you worry about at three in the morning?",
+      "partnerPrompt": "What does {name} worry about at three in the morning?"
+    },
+    {
+      "id": "deep-happiest-memory",
+      "category": "deep",
+      "selfPrompt": "What's your happiest childhood memory?",
+      "partnerPrompt": "What's {name}'s happiest childhood memory?"
+    },
+    {
+      "id": "deep-feels-like-home",
+      "category": "deep",
+      "selfPrompt": "Where in South Africa feels most like home to you?",
+      "partnerPrompt": "Where in South Africa feels most like home to {name}?"
+    },
+    {
+      "id": "deep-family-tradition",
+      "category": "deep",
+      "selfPrompt": "Which family tradition do you most want to keep going?",
+      "partnerPrompt": "Which family tradition does {name} most want to keep going?"
+    },
+    {
+      "id": "deep-childhood-holidays",
+      "category": "deep",
+      "selfPrompt": "Did the coast or the bushveld shape your childhood holidays?",
+      "partnerPrompt": "Did the coast or the bushveld shape {name}'s childhood holidays?"
+    },
+    {
+      "id": "spice-bed-outfit",
+      "category": "spice",
+      "selfPrompt": "What's your favourite thing to see your partner wearing to bed?",
+      "partnerPrompt": "What's {name}'s favourite thing to see you wearing to bed?"
+    },
+    {
+      "id": "spice-spoon",
+      "category": "spice",
+      "selfPrompt": "Big spoon or little spoon?",
+      "partnerPrompt": "Is {name} the big spoon or the little spoon?"
+    },
+    {
+      "id": "spice-adventurous-kiss",
+      "category": "spice",
+      "selfPrompt": "Where's the most adventurous place you've kissed your partner?",
+      "partnerPrompt": "Where does {name} say is the most adventurous place you've kissed?"
+    },
+    {
+      "id": "spice-lights",
+      "category": "spice",
+      "selfPrompt": "Lights on or lights off?",
+      "partnerPrompt": "Does {name} prefer the lights on or off?"
+    },
+    {
+      "id": "spice-woken-up",
+      "category": "spice",
+      "selfPrompt": "What's your ideal way to be woken up?",
+      "partnerPrompt": "What's {name}'s ideal way to be woken up?"
+    },
+    {
+      "id": "spice-first-noticed",
+      "category": "spice",
+      "selfPrompt": "What did you first notice about your partner physically?",
+      "partnerPrompt": "What did {name} first notice about you physically?"
+    },
+    {
+      "id": "spice-best-move",
+      "category": "spice",
+      "selfPrompt": "What's your partner's best move?",
+      "partnerPrompt": "What does {name} think is your best move?"
+    },
+    {
+      "id": "spice-romance-clock",
+      "category": "spice",
+      "selfPrompt": "Romance: are you a morning person or a night owl?",
+      "partnerPrompt": "For romance, is {name} a morning person or a night owl?"
+    },
+    {
+      "id": "spice-playlist",
+      "category": "spice",
+      "selfPrompt": "What song belongs on your romantic playlist?",
+      "partnerPrompt": "What song belongs on {name}'s romantic playlist?"
+    },
+    {
+      "id": "spice-cheesiest-move",
+      "category": "spice",
+      "selfPrompt": "What's the cheesiest thing you've done to set the mood?",
+      "partnerPrompt": "What's the cheesiest thing {name} has done to set the mood?"
+    },
+    {
+      "id": "spice-silk-or-flannel",
+      "category": "spice",
+      "selfPrompt": "Silk sheets or flannel pyjamas?",
+      "partnerPrompt": "Would {name} pick silk sheets or flannel pyjamas?"
+    },
+    {
+      "id": "spice-favourite-flirt",
+      "category": "spice",
+      "selfPrompt": "What's your favourite way your partner flirts with you?",
+      "partnerPrompt": "What's {name}'s favourite way you flirt with them?"
+    },
+    {
+      "id": "spice-free-pass",
+      "category": "spice",
+      "selfPrompt": "Who's on your celebrity free pass list?",
+      "partnerPrompt": "Who's on {name}'s celebrity free pass list?"
+    },
+    {
+      "id": "spice-most-romantic",
+      "category": "spice",
+      "selfPrompt": "What's the most romantic thing your partner has ever done?",
+      "partnerPrompt": "What's the most romantic thing you've done, according to {name}?"
+    },
+    {
+      "id": "spice-date-night",
+      "category": "spice",
+      "selfPrompt": "What's your go-to date night that always ends well?",
+      "partnerPrompt": "What's {name}'s go-to date night that always ends well?"
+    },
+    {
+      "id": "spice-kissed-where",
+      "category": "spice",
+      "selfPrompt": "Where do you most like to be kissed?",
+      "partnerPrompt": "Where does {name} most like to be kissed?"
+    },
+    {
+      "id": "spice-turn-off",
+      "category": "spice",
+      "selfPrompt": "What's your biggest turn-off?",
+      "partnerPrompt": "What's {name}'s biggest turn-off?"
+    },
+    {
+      "id": "spice-scent",
+      "category": "spice",
+      "selfPrompt": "What perfume or aftershave drives you wild?",
+      "partnerPrompt": "What scent drives {name} wild?"
+    },
+    {
+      "id": "spice-accent",
+      "category": "spice",
+      "selfPrompt": "Which accent do you find sexiest?",
+      "partnerPrompt": "Which accent does {name} find sexiest?"
+    },
+    {
+      "id": "spice-favourite-outfit",
+      "category": "spice",
+      "selfPrompt": "Which of your outfits does your partner love you in most?",
+      "partnerPrompt": "Which of your outfits does {name} love you in most?"
+    },
+    {
+      "id": "spice-cheekiest-text",
+      "category": "spice",
+      "selfPrompt": "What's the cheekiest text you've ever sent your partner?",
+      "partnerPrompt": "What's the cheekiest text {name} has ever sent you?"
+    },
+    {
+      "id": "spice-better-kisser",
+      "category": "spice",
+      "selfPrompt": "Be honest — which of you is the better kisser?",
+      "partnerPrompt": "Who does {name} say is the better kisser?"
+    },
+    {
+      "id": "spice-lazy-sunday",
+      "category": "spice",
+      "selfPrompt": "What's your perfect lazy Sunday morning together?",
+      "partnerPrompt": "What's {name}'s perfect lazy Sunday morning together?"
+    },
+    {
+      "id": "spice-mood-killer",
+      "category": "spice",
+      "selfPrompt": "What kills the mood faster: load shedding or the dog jumping on the bed?",
+      "partnerPrompt": "What does {name} say kills the mood faster: load shedding or the dog on the bed?"
+    },
+    {
+      "id": "spice-klippies",
+      "category": "spice",
+      "selfPrompt": "Klippies and Coke or bubbly for a romantic night in?",
+      "partnerPrompt": "Would {name} pick Klippies and Coke or bubbly for a romantic night in?"
     }
   ]
 }

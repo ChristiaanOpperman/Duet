@@ -116,8 +116,8 @@ class SetupOptionsScreen extends StatelessWidget {
                 const SectionLabel('Categories'),
                 const SizedBox(height: Insets.s + 4),
                 Wrap(
-                  spacing: Insets.s,
-                  runSpacing: Insets.s,
+                  spacing: Insets.s - 2,
+                  runSpacing: Insets.s - 2,
                   children: [
                     for (final category in QuestionCategory.values)
                       if (category != QuestionCategory.custom ||
@@ -283,8 +283,8 @@ class _CategoryChip extends StatelessWidget {
         duration: const Duration(milliseconds: 220),
         curve: Curves.easeOutCubic,
         padding: const EdgeInsets.symmetric(
-          horizontal: Insets.m,
-          vertical: Insets.s + 4,
+          horizontal: Insets.s + 4,
+          vertical: Insets.s + 2,
         ),
         decoration: BoxDecoration(
           color: selected
@@ -300,14 +300,14 @@ class _CategoryChip extends StatelessWidget {
           children: [
             Icon(
               category.icon,
-              size: 16,
+              size: 15,
               color: selected ? AppColors.magenta : AppColors.textMuted,
             ),
-            const SizedBox(width: Insets.s),
+            const SizedBox(width: Insets.xs + 2),
             Text(
               category.label,
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontSize: 14,
+                    fontSize: 13,
                     color: selected
                         ? AppColors.textPrimary
                         : AppColors.textSecondary,

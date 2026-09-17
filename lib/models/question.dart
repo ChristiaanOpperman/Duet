@@ -7,6 +7,12 @@ enum QuestionCategory {
   habits('habits', 'Habits & Quirks', Icons.psychology_alt_rounded),
   history('history', 'Our History', Icons.auto_stories_rounded),
   wouldYouRather('would_you_rather', 'Would You Rather', Icons.shuffle_rounded),
+  fun('fun', 'Just for Fun', Icons.emoji_emotions_rounded),
+  deep('deep', 'Deep & Meaningful', Icons.nights_stay_rounded),
+
+  /// Bedroom-flavoured. Off by default — a host turns it on deliberately,
+  /// because not every table wants it.
+  spice('spice', 'Spice', Icons.local_fire_department_rounded),
 
   /// Questions written by the players during this session. Never present in
   /// the bundled pack — the chip only appears once something has been added.

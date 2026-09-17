@@ -1,5 +1,6 @@
 import 'package:duet/data/question_dealer.dart';
 import 'package:duet/data/question_repository.dart';
+import 'package:duet/models/game_settings.dart';
 import 'package:duet/models/question.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -43,6 +44,33 @@ void main() {
       questions.any((q) => q.category == QuestionCategory.custom),
       isFalse,
     );
+  });
+
+  test('spice is off by default — the host opts in', () {
+    const defaults = GameSettings();
+    expect(defaults.categories.contains(QuestionCategory.spice), isFalse);
+    for (final category in QuestionCategory.values) {
+      if (category != QuestionCategory.spice &&
+          category != QuestionCategory.custom) {
+        expect(defaults.categories.contains(category), isTrue,
+            reason: '${category.id} should be on by default');
+      }
+    }
+  });
+
+  test('every bundled category has enough to fill a long game on its own', () {
+    // A host who picks one category still needs two non-overlapping sets per
+    // couple at the longest setting.
+    for (final category in QuestionCategory.values) {
+      if (category == QuestionCategory.custom) continue;
+      final inCategory =
+          questions.where((q) => q.category == category).toList();
+      expect(
+        inCategory.length,
+        greaterThanOrEqualTo(QuestionDealer.minimumPoolSize(7)),
+        reason: category.id,
+      );
+    }
   });
 
   test('the pack is big enough for a full table at the longest setting', () {

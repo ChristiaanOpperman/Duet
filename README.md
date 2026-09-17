@@ -57,8 +57,16 @@ Like the game history, these live in memory for the session only.
 ```
 
 `{name}` is replaced with the answering player's name when the presenter asks
-their partner. Categories are `favourites`, `habits`, `history` and
-`would_you_rather`.
+their partner. Categories are `favourites`, `habits`, `history`,
+`would_you_rather`, `fun`, `deep` and `spice`.
+
+167 questions ship with the app. **Spice is off by default** — it is
+bedroom-flavoured, so the host switches it on deliberately from Game options.
+Every category holds enough on its own to run a full six-couple game, so you
+can play an evening of nothing but Deep & Meaningful if you want to.
+
+A few questions in each category are South African rather than generic. It is a
+light touch on purpose.
 
 ## Development
 

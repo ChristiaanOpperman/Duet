@@ -178,6 +178,11 @@ void main() {
     await shoot(tester, controller, 'paper_verdict_matched');
   });
 
+  testWidgets('setup options scrolled to the categories', (tester) async {
+    final controller = await game()..goToOptionsSetup();
+    await shoot(tester, controller, 'setup_options_categories', scroll: 700);
+  });
+
   testWidgets('answer handoff', (tester) async {
     final controller = await game();
     controller.startGame(random: Random(1));

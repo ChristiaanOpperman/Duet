@@ -12,7 +12,10 @@ class GameSettings {
       QuestionCategory.habits,
       QuestionCategory.history,
       QuestionCategory.wouldYouRather,
+      QuestionCategory.fun,
+      QuestionCategory.deep,
       QuestionCategory.custom,
+      // Spice is deliberately absent: the host opts in.
     },
   });
 
