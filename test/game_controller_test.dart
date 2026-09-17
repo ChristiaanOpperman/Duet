@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:duet/data/question_repository.dart';
+import 'package:duet/models/game_mode.dart';
 import 'package:duet/models/question.dart';
 import 'package:duet/state/game_controller.dart';
 import 'package:duet/state/game_phase.dart';
@@ -596,6 +597,157 @@ void main() {
       expect(game.customQuestions, hasLength(1));
       game.newGame();
       expect(game.customQuestions, hasLength(1));
+    });
+  });
+
+  group('pen & paper mode', () {
+    /// Plays a whole paper game, judging with [verdict]. Fails loudly if the
+    /// game ever asks for typed input.
+    void playPaper(GameController game, bool Function(int index) verdict) {
+      var index = 0;
+      var guard = 0;
+      while (game.phase != GamePhase.results) {
+        expect(guard++, lessThan(500));
+        switch (game.phase) {
+          case GamePhase.paperPrompt:
+            game.revealOnPaper();
+          case GamePhase.paperVerdict:
+            game.judge(correct: verdict(index++));
+            game.advanceAfterReveal();
+          case GamePhase.scoreboard:
+            game.continueFromScoreboard();
+          default:
+            fail('paper mode should never reach ${game.phase}');
+        }
+      }
+    }
+
+    test('starts straight on the first question, skipping answer entry',
+        () async {
+      final game = await readyGame(couples: 2, questionsPerPlayer: 3);
+      game.setMode(GameMode.paper);
+      game.startGame(random: Random(41));
+
+      expect(game.isPaperMode, isTrue);
+      expect(game.phase, GamePhase.paperPrompt,
+          reason: 'no private answer round on paper');
+      expect(game.turns, hasLength(12));
+    });
+
+    test('deals the same turn structure as a classic game', () async {
+      final classic = await readyGame(couples: 3, questionsPerPlayer: 2);
+      classic.startGame(random: Random(42));
+
+      final paper = await readyGame(couples: 3, questionsPerPlayer: 2);
+      paper.setMode(GameMode.paper);
+      paper.startGame(random: Random(42));
+
+      expect(
+        paper.turns.map((t) => '${t.question.id}:${t.answerer.id}').toList(),
+        classic.turns.map((t) => '${t.question.id}:${t.answerer.id}').toList(),
+      );
+    });
+
+    test('never passes through a typing or handoff phase', () async {
+      final game = await readyGame(couples: 2, questionsPerPlayer: 2);
+      game.setMode(GameMode.paper);
+      game.startGame(random: Random(43));
+
+      final seen = <GamePhase>{};
+      var guard = 0;
+      while (game.phase != GamePhase.results) {
+        expect(guard++, lessThan(500));
+        seen.add(game.phase);
+        switch (game.phase) {
+          case GamePhase.paperPrompt:
+            game.revealOnPaper();
+          case GamePhase.paperVerdict:
+            game.judge(correct: true);
+            game.advanceAfterReveal();
+          case GamePhase.scoreboard:
+            game.continueFromScoreboard();
+          default:
+            fail('unexpected phase ${game.phase}');
+        }
+      }
+
+      expect(
+        seen.intersection({
+          GamePhase.answerHandoff,
+          GamePhase.answering,
+          GamePhase.guessHandoff,
+          GamePhase.guessing,
+          GamePhase.reveal,
+        }),
+        isEmpty,
+      );
+    });
+
+    test('the scoreboard still sits between couples', () async {
+      final game = await readyGame(couples: 3, questionsPerPlayer: 2);
+      game.setMode(GameMode.paper);
+      game.startGame(random: Random(44));
+
+      var scoreboards = 0;
+      var guard = 0;
+      while (game.phase != GamePhase.results) {
+        expect(guard++, lessThan(500));
+        switch (game.phase) {
+          case GamePhase.paperPrompt:
+            game.revealOnPaper();
+          case GamePhase.paperVerdict:
+            game.judge(correct: false);
+            game.advanceAfterReveal();
+          case GamePhase.scoreboard:
+            scoreboards++;
+            game.continueFromScoreboard();
+          default:
+            fail('unexpected phase ${game.phase}');
+        }
+      }
+      expect(scoreboards, 2, reason: 'between three couples');
+    });
+
+    test('scores exactly like a classic game', () async {
+      final game = await readyGame(couples: 2, questionsPerPlayer: 3);
+      game.setMode(GameMode.paper);
+      game.setPointsPerCorrect(10);
+      game.startGame(random: Random(45));
+
+      playPaper(game, (i) => game.currentTurn.coupleIndex == 0);
+
+      expect(game.standings.first.couple.id, game.couples[0].id);
+      expect(game.standings.first.points, 6 * 10);
+      expect(game.standings.last.points, 0);
+    });
+
+    test('archives a record that knows it was played on paper', () async {
+      final game = await readyGame(couples: 2, questionsPerPlayer: 2);
+      game.setMode(GameMode.paper);
+      game.startGame(random: Random(46));
+      playPaper(game, (_) => true);
+
+      final record = game.history.single;
+      expect(record.mode, GameMode.paper);
+      expect(record.isComplete, isTrue);
+      // The app never saw the answers, so the recap must not pretend it did.
+      expect(record.turns.every((t) => t.answer.isEmpty), isTrue);
+      expect(record.turns.every((t) => t.guess.isEmpty), isTrue);
+      expect(record.turns.every((t) => t.isJudged), isTrue);
+    });
+
+    test('the mode persists across games until changed', () async {
+      final game = await readyGame(couples: 2, questionsPerPlayer: 2);
+      game.setMode(GameMode.paper);
+      game.startGame(random: Random(47));
+      playPaper(game, (_) => true);
+
+      game.playAgain();
+      expect(game.phase, GamePhase.paperPrompt);
+
+      game.setMode(GameMode.classic);
+      game.startGame(random: Random(48));
+      expect(game.phase, GamePhase.answerHandoff);
     });
   });
 }

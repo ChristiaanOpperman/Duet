@@ -6,6 +6,8 @@ import 'screens/guess_screen.dart';
 import 'screens/handoff_screen.dart';
 import 'screens/home_screen.dart';
 import 'screens/how_to_play_screen.dart';
+import 'screens/paper_prompt_screen.dart';
+import 'screens/paper_verdict_screen.dart';
 import 'screens/recap_screen.dart';
 import 'screens/results_screen.dart';
 import 'screens/reveal_screen.dart';
@@ -99,6 +101,10 @@ class _PhaseRouter extends StatelessWidget {
         GamePhase.reveal => 'reveal-${game.currentTurn.question.id}'
             '-${game.currentTurn.guesser.id}',
         GamePhase.recap => 'recap-${game.openRecord?.number}',
+        GamePhase.paperPrompt => 'paper-${game.currentTurn.question.id}'
+            '-${game.currentTurn.guesser.id}',
+        GamePhase.paperVerdict => 'paper-verdict-'
+            '${game.currentTurn.question.id}-${game.currentTurn.guesser.id}',
         _ => game.phase.name,
       };
 
@@ -116,5 +122,7 @@ class _PhaseRouter extends StatelessWidget {
         GamePhase.scoreboard => const ScoreboardScreen(),
         GamePhase.results => const ResultsScreen(),
         GamePhase.recap => const RecapScreen(),
+        GamePhase.paperPrompt => const PaperPromptScreen(),
+        GamePhase.paperVerdict => const PaperVerdictScreen(),
       };
 }

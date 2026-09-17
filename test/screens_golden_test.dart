@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:duet/app.dart';
 import 'package:duet/data/question_repository.dart';
+import 'package:duet/models/game_mode.dart';
 import 'package:duet/models/question.dart';
 import 'package:duet/state/game_controller.dart';
 import 'package:duet/state/game_phase.dart';
@@ -151,6 +152,30 @@ void main() {
         );
       },
     );
+  });
+
+  testWidgets('paper prompt', (tester) async {
+    final controller = await game();
+    controller.setMode(GameMode.paper);
+    controller.startGame(random: Random(1));
+    await shoot(tester, controller, 'paper_prompt');
+  });
+
+  testWidgets('paper verdict, awaiting the call', (tester) async {
+    final controller = await game();
+    controller.setMode(GameMode.paper);
+    controller.startGame(random: Random(1));
+    controller.revealOnPaper();
+    await shoot(tester, controller, 'paper_verdict');
+  });
+
+  testWidgets('paper verdict, matched', (tester) async {
+    final controller = await game();
+    controller.setMode(GameMode.paper);
+    controller.startGame(random: Random(1));
+    controller.revealOnPaper();
+    controller.judge(correct: true);
+    await shoot(tester, controller, 'paper_verdict_matched');
   });
 
   testWidgets('answer handoff', (tester) async {

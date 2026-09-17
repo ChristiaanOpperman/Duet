@@ -5,9 +5,12 @@ Guidance for Claude Code when working in this repository.
 ## What this is
 
 **Duet** is a couples trivia party game for one shared device. Up to six couples
-play. Each player privately answers questions about themselves, then the device
-becomes a presenter and asks their partner to guess those answers. The host
-judges each guess and points go to the couple.
+play. One partner answers a question about themselves, the other tries to guess
+that answer, the host judges it and points go to the couple.
+
+There are **two modes** (`lib/models/game_mode.dart`), chosen on the home
+screen. They deal the same questions in the same order and score identically —
+they differ only in where the answers get written.
 
 Single Flutter app, no backend, no network, no database. Finished games are
 kept **in memory for the app session only** so they can be reviewed; closing
@@ -26,8 +29,8 @@ flutter test --update-goldens  # after a deliberate visual change
 
 ## Platforms
 
-`chrome` and `macos` are the only targets that run on this machine today: iOS
-needs Xcode 16+ (15.2 installed) and Android needs the SDK cmdline-tools.
+`chrome`, `macos`, the iOS Simulator and a physical iPhone all work. Android
+still needs the SDK cmdline-tools.
 
 **The app has zero pub dependencies beyond `flutter_lints`, and that is
 deliberate.** No plugins means no CocoaPods step and no platform channels, so
@@ -60,8 +63,28 @@ add a parallel score or progress field; compute it from `_turns`.
 
 The list is ordered couple by couple, and within a couple all of partner A's
 questions (guessed by B) then all of B's. `advanceAfterReveal()` reads the next
-turn to decide whether the next phase is another guess, a handoff to the other
-partner, the between-couples scoreboard, or the results.
+turn to decide what comes next — another question, a handoff to the other
+partner, the between-couples scoreboard, or the results — and is shared by both
+modes.
+
+### The two modes
+
+`GameSettings.mode` selects between them and `GameRecord.mode` remembers which
+one produced a finished game.
+
+- **Classic** — `answerHandoff → answering` for every player up front, then
+  `guessHandoff → guessing → reveal` per turn. Answers and guesses are typed,
+  so `Turn.answer` and `Turn.guess` are populated and the reveal shows them
+  side by side.
+- **Pen & paper** — `paperPrompt → paperVerdict` per turn, and nothing else.
+  `startGame` skips the private answer round entirely, and there are no handoff
+  gates because everyone can see the question. **`Turn.answer` and
+  `Turn.guess` stay empty** — the app never learns what was written, only the
+  host's verdict. Anything rendering a turn must handle that; the recap checks
+  `record.mode.isPaper` and shows the verdict alone rather than empty lines.
+
+A test asserts a paper game never passes through a typing or handoff phase, and
+another asserts both modes deal an identical turn structure from the same seed.
 
 `Turn` is deliberately mutable — it is filled in across two phases of one
 session, not a value type.
@@ -145,8 +168,8 @@ there is no `google_fonts` package and no runtime font fetch.
 
 Shared widgets in `lib/widgets/` cover the whole visual system —
 `GradientScaffold` (page chrome with the drifting backdrop blooms), `QuizCard`,
-`GlowButton` / `GhostButton`, `HoldButton` (the press-and-hold privacy gate),
-`ConfettiBurst`, `StandingsList`. Reuse these instead of building new
+`GlowButton` / `GhostButton`, `HoldButton` (the press-and-hold privacy gate,
+classic mode only), `ConfettiBurst`, `StandingsList`. Reuse these instead of building new
 one-off containers.
 
 Layout is phone-first; `GradientScaffold` caps content at
@@ -155,8 +178,8 @@ Layout is phone-first; `GradientScaffold` caps content at
 ## Tests
 
 - `test/game_controller_test.dart` — phase machine and scoring, driven through
-  full playthroughs with a fake repository, plus a `session history` group
-  covering archiving, partial games and recap navigation.
+  full playthroughs with a fake repository, plus `session history`,
+  `custom questions` and `pen & paper mode` groups.
 - `test/partner_prompt_test.dart` — the first-person to second-person rules,
   including that the name appears exactly once.
 - `test/question_dealer_test.dart` — the two dealing invariants.

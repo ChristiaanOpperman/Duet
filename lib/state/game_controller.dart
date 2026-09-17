@@ -6,6 +6,7 @@ import '../data/partner_prompt.dart';
 import '../data/question_dealer.dart';
 import '../data/question_repository.dart';
 import '../models/couple.dart';
+import '../models/game_mode.dart';
 import '../models/game_record.dart';
 import '../models/game_settings.dart';
 import '../models/player.dart';
@@ -184,6 +185,15 @@ class GameController extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Chosen on the home screen, before setup.
+  void setMode(GameMode mode) {
+    if (mode == _settings.mode) return;
+    _settings = _settings.copyWith(mode: mode);
+    notifyListeners();
+  }
+
+  bool get isPaperMode => _settings.mode.isPaper;
+
   void setQuestionsPerPlayer(int value) {
     if (value == _settings.questionsPerPlayer) return;
     _settings = _settings.copyWith(questionsPerPlayer: value);
@@ -274,7 +284,9 @@ class GameController extends ChangeNotifier {
     _answerQuestionIndex = 0;
     _turnIndex = 0;
     _currentGameArchived = false;
-    _phase = GamePhase.answerHandoff;
+    // Nothing is typed in a paper game, so there is no private answer round
+    // to run — the first couple starts writing straight away.
+    _phase = isPaperMode ? GamePhase.paperPrompt : GamePhase.answerHandoff;
     notifyListeners();
   }
 
@@ -363,6 +375,11 @@ class GameController extends ChangeNotifier {
   /// The host's call on whether the guess counted. Deliberately manual —
   /// "macademia" for "macadamia" should score, and no string match gets that
   /// consistently right.
+  /// Pen & paper: the pair have written their answers and are about to show
+  /// each other. Nothing is revealed by the app — it only asks for the
+  /// verdict afterwards.
+  void revealOnPaper() => _setPhase(GamePhase.paperVerdict);
+
   void judge({required bool correct}) {
     currentTurn.correct = correct;
     notifyListeners();
@@ -385,6 +402,10 @@ class GameController extends ChangeNotifier {
     final upcoming = _turns[next];
     if (upcoming.coupleId != previous.coupleId) {
       _phase = GamePhase.scoreboard;
+    } else if (isPaperMode) {
+      // Everyone can see the question in a paper game, so swapping answerer
+      // and guesser needs no handoff gate.
+      _phase = GamePhase.paperPrompt;
     } else if (upcoming.guesser.id != previous.guesser.id) {
       _phase = GamePhase.guessHandoff;
     } else {
@@ -393,8 +414,11 @@ class GameController extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// The scoreboard always sits between couples, so the next thing is a gate.
-  void continueFromScoreboard() => _setPhase(GamePhase.guessHandoff);
+  /// The scoreboard always sits between couples. In a classic game the next
+  /// thing is a privacy gate; on paper the next couple just starts.
+  void continueFromScoreboard() => _setPhase(
+        isPaperMode ? GamePhase.paperPrompt : GamePhase.guessHandoff,
+      );
 
   // --------------------------------------------------------------- progress
 
@@ -468,6 +492,7 @@ class GameController extends ChangeNotifier {
         turns: List.unmodifiable(_turns),
         pointsPerCorrect: _settings.pointsPerCorrect,
         questionsPerPlayer: _settings.questionsPerPlayer,
+        mode: _settings.mode,
       ),
     );
     _currentGameArchived = true;

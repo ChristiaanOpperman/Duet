@@ -20,18 +20,18 @@ class HowToPlayScreen extends StatelessWidget {
     ),
     (
       '2',
-      'Answer in secret',
-      'The phone goes round the room. Each person answers their own questions while everybody else looks away.',
+      'Pick how you write',
+      'Classic: the phone goes round and everyone types their answers in secret, then types their guesses. Pen & paper: nothing is typed — the question goes on screen and the pair write on paper.',
     ),
     (
       '3',
       'Guess your partner',
-      "Now the phone asks you what your partner said. Type your best guess — no peeking.",
+      'One of you writes the true answer, the other writes what they think it is. Reveal at the same time.',
     ),
     (
       '4',
       'Reveal and score',
-      'The real answer drops in. The host calls it: close enough scores, way off does not.',
+      'Classic shows both answers side by side. On paper you show each other. Either way the host calls it: close enough scores, way off does not.',
     ),
     (
       '5',

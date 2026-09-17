@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
+import '../models/game_mode.dart';
 import '../models/game_record.dart';
 import '../state/game_scope.dart';
 import '../theme/app_colors.dart';
+import '../theme/app_gradients.dart';
 import '../theme/app_theme.dart';
 import '../widgets/glow_button.dart';
 import '../widgets/gradient_scaffold.dart';
@@ -18,23 +20,10 @@ class HomeScreen extends StatelessWidget {
     final theme = Theme.of(context);
 
     return GradientScaffold(
-      bottomBar: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          GlowButton(
-            label: game.isLoading ? 'Loading questions…' : 'Start a game',
-            icon: Icons.play_arrow_rounded,
-            onPressed: game.isLoading || game.loadError != null
-                ? null
-                : game.goToCouplesSetup,
-          ),
-          const SizedBox(height: Insets.s),
-          GhostButton(
-            label: 'How to play',
-            icon: Icons.help_outline_rounded,
-            onPressed: game.showHowToPlay,
-          ),
-        ],
+      bottomBar: GhostButton(
+        label: 'How to play',
+        icon: Icons.help_outline_rounded,
+        onPressed: game.showHowToPlay,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -74,7 +63,17 @@ class HomeScreen extends StatelessWidget {
               ),
             )
           else
-            const _HowItWorksStrip(),
+            for (final mode in GameMode.values) ...[
+              _ModeCard(
+                mode: mode,
+                enabled: !game.isLoading,
+                onTap: () {
+                  game.setMode(mode);
+                  game.goToCouplesSetup();
+                },
+              ),
+              const SizedBox(height: Insets.s + 4),
+            ],
           if (game.hasHistory) ...[
             const SizedBox(height: Insets.l),
             const _SessionHistory(),
@@ -82,49 +81,6 @@ class HomeScreen extends StatelessWidget {
           const Spacer(),
         ],
       ),
-    );
-  }
-}
-
-/// A three-beat summary so a first-time host knows the shape of the game
-/// before pressing start.
-class _HowItWorksStrip extends StatelessWidget {
-  const _HowItWorksStrip();
-
-  @override
-  Widget build(BuildContext context) {
-    const steps = [
-      (Icons.lock_outline_rounded, 'Answer\nin secret'),
-      (Icons.record_voice_over_rounded, 'Guess your\npartner'),
-      (Icons.emoji_events_rounded, 'Win\nbragging rights'),
-    ];
-
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        for (final (icon, label) in steps)
-          Expanded(
-            child: Column(
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(Insets.m),
-                  decoration: BoxDecoration(
-                    color: AppColors.surface.withValues(alpha: 0.75),
-                    shape: BoxShape.circle,
-                    border: Border.all(color: AppColors.hairline),
-                  ),
-                  child: Icon(icon, color: AppColors.magenta, size: 22),
-                ),
-                const SizedBox(height: Insets.s + 2),
-                Text(
-                  label,
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
-              ],
-            ),
-          ),
-      ],
     );
   }
 }
@@ -224,6 +180,67 @@ class _HistoryRow extends StatelessWidget {
             const Icon(Icons.chevron_right_rounded,
                 size: 20, color: AppColors.textMuted),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+/// One of the two ways to play. Tapping a card also selects the mode, so the
+/// choice is made before setup rather than buried in options.
+class _ModeCard extends StatelessWidget {
+  const _ModeCard({
+    required this.mode,
+    required this.enabled,
+    required this.onTap,
+  });
+
+  final GameMode mode;
+  final bool enabled;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final gradient =
+        mode.isPaper ? AppGradients.cool : AppGradients.primary;
+
+    return Opacity(
+      opacity: enabled ? 1 : 0.4,
+      child: GestureDetector(
+        onTap: enabled ? onTap : null,
+        behavior: HitTestBehavior.opaque,
+        child: QuizCard(
+          glow: gradient.colors.first,
+          padding: const EdgeInsets.all(Insets.m + 4),
+          child: Row(
+            children: [
+              Container(
+                width: 48,
+                height: 48,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  gradient: gradient,
+                  borderRadius: BorderRadius.circular(Radii.button - 4),
+                ),
+                child: Icon(mode.icon, color: Colors.white, size: 24),
+              ),
+              const SizedBox(width: Insets.m),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(mode.label, style: theme.textTheme.titleLarge),
+                    const SizedBox(height: 2),
+                    Text(mode.blurb, style: theme.textTheme.bodyMedium),
+                  ],
+                ),
+              ),
+              const SizedBox(width: Insets.s),
+              const Icon(Icons.chevron_right_rounded,
+                  size: 20, color: AppColors.textMuted),
+            ],
+          ),
         ),
       ),
     );

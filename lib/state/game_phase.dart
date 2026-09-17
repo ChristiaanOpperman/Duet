@@ -35,6 +35,14 @@ enum GamePhase {
   /// Final podium.
   results,
 
+  /// Pen & paper: the question is on screen for the room while the pair
+  /// write their answers down.
+  paperPrompt,
+
+  /// Pen & paper: they have shown each other their paper, and the host says
+  /// whether the guess counted.
+  paperVerdict,
+
   /// Reviewing a finished game from this session's history: every question,
   /// what was answered, what was guessed.
   recap,

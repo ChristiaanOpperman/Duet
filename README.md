@@ -2,11 +2,17 @@
 
 A couples trivia party game for one shared device.
 
-Up to six couples play. Each person privately answers a handful of questions
-about themselves. Then the phone becomes a presenter and asks their partner the
-same questions in the second person — *"What is Alex's favourite nut?"* — they
-type a guess, the real answer is revealed, and the host calls it. Points go to
-the couple, not the player.
+Up to six couples play. One partner answers a question about themselves, the
+other tries to guess what they said, and the host calls it. Points go to the
+couple, not the player.
+
+Two ways to play, picked on the home screen:
+
+- **Classic** — everyone types their answers into the phone in a private round,
+  then each partner types their guess and the app reveals the two side by side.
+- **Pen & paper** — nothing is typed. The question goes on screen, the pair
+  write on paper, they turn their papers over together, and the host taps
+  whether it matched. Much faster, and better with a big group.
 
 Built in Flutter with no dependencies beyond the SDK: offline, no accounts, no
 backend.

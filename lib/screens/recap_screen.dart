@@ -51,11 +51,20 @@ class RecapScreen extends StatelessWidget {
           ),
           const SizedBox(height: Insets.m),
           Text(
-            '${record.questionsPerPlayer} questions each · '
-            '${record.pointsPerCorrect} pts per correct · '
+            '${record.mode.label} · ${record.questionsPerPlayer} questions '
+            'each · ${record.pointsPerCorrect} pts per correct · '
             '${record.correctCount} of $played guessed right',
             style: theme.textTheme.bodyMedium,
           ),
+          if (record.mode.isPaper) ...[
+            const SizedBox(height: Insets.s + 2),
+            Text(
+              'Answers were written on paper, so only the verdicts were '
+              'recorded.',
+              style: theme.textTheme.bodyMedium
+                  ?.copyWith(color: AppColors.textMuted),
+            ),
+          ],
           if (!record.isComplete) ...[
             const SizedBox(height: Insets.m),
             _UnfinishedNotice(remaining: record.turns.length - played),
@@ -71,6 +80,7 @@ class RecapScreen extends StatelessWidget {
               index: i,
               turns: record.turnsFor(record.couples[i].id),
               pointsPerCorrect: record.pointsPerCorrect,
+              showWrittenAnswers: !record.mode.isPaper,
             ),
         ],
       ),
@@ -127,12 +137,14 @@ class _CoupleSection extends StatelessWidget {
     required this.index,
     required this.turns,
     required this.pointsPerCorrect,
+    required this.showWrittenAnswers,
   });
 
   final Couple couple;
   final int index;
   final List<Turn> turns;
   final int pointsPerCorrect;
+  final bool showWrittenAnswers;
 
   @override
   Widget build(BuildContext context) {
@@ -148,6 +160,7 @@ class _CoupleSection extends StatelessWidget {
             turn: turn,
             coupleIndex: index,
             pointsPerCorrect: pointsPerCorrect,
+            showWrittenAnswers: showWrittenAnswers,
           ),
           const SizedBox(height: Insets.s + 4),
         ],
@@ -162,11 +175,15 @@ class _TurnCard extends StatelessWidget {
     required this.turn,
     required this.coupleIndex,
     required this.pointsPerCorrect,
+    required this.showWrittenAnswers,
   });
 
   final Turn turn;
   final int coupleIndex;
   final int pointsPerCorrect;
+
+  /// False for paper games, where the app never saw what was written.
+  final bool showWrittenAnswers;
 
   @override
   Widget build(BuildContext context) {
@@ -193,24 +210,33 @@ class _TurnCard extends StatelessWidget {
           ),
           const SizedBox(height: Insets.s + 4),
           Text(turn.question.selfPrompt, style: theme.textTheme.titleLarge),
-          const SizedBox(height: Insets.m),
-          _Line(
-            who: turn.answerer.name,
-            verb: 'said',
-            text: turn.answer,
-            colour: AppColors.textPrimary,
-          ),
-          const SizedBox(height: Insets.s),
-          _Line(
-            who: turn.guesser.name,
-            verb: 'guessed',
-            text: correct == null ? '—' : turn.guess,
-            colour: switch (correct) {
-              true => AppColors.mint,
-              false => AppColors.coral,
-              null => AppColors.textMuted,
-            },
-          ),
+          if (showWrittenAnswers) ...[
+            const SizedBox(height: Insets.m),
+            _Line(
+              who: turn.answerer.name,
+              verb: 'said',
+              text: turn.answer,
+              colour: AppColors.textPrimary,
+            ),
+            const SizedBox(height: Insets.s),
+            _Line(
+              who: turn.guesser.name,
+              verb: 'guessed',
+              text: correct == null ? '—' : turn.guess,
+              colour: switch (correct) {
+                true => AppColors.mint,
+                false => AppColors.coral,
+                null => AppColors.textMuted,
+              },
+            ),
+          ] else ...[
+            const SizedBox(height: Insets.s),
+            Text(
+              '${turn.answerer.name} answered · ${turn.guesser.name} guessed',
+              style: theme.textTheme.bodyMedium
+                  ?.copyWith(color: AppColors.textMuted),
+            ),
+          ],
         ],
       ),
     );

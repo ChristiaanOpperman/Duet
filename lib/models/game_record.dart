@@ -1,4 +1,5 @@
 import 'couple.dart';
+import 'game_mode.dart';
 import 'standing.dart';
 import 'turn.dart';
 
@@ -20,6 +21,7 @@ class GameRecord {
     required this.turns,
     required this.pointsPerCorrect,
     required this.questionsPerPlayer,
+    required this.mode,
   });
 
   /// 1 for the first game of the session, 2 for the next, and so on.
@@ -29,6 +31,10 @@ class GameRecord {
   final List<Turn> turns;
   final int pointsPerCorrect;
   final int questionsPerPlayer;
+
+  /// Paper games never captured the answers — only the verdicts — so the
+  /// recap has to render them differently.
+  final GameMode mode;
 
   /// False when the game was abandoned partway — the recap says so rather
   /// than presenting a half-played game as a final result.
