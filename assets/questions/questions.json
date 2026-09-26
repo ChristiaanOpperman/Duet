@@ -56,22 +56,10 @@
       "partnerPrompt": "What's {name}'s favourite pizza topping?"
     },
     {
-      "id": "fav-colour-to-wear",
-      "category": "favourites",
-      "selfPrompt": "What colour do you wear the most?",
-      "partnerPrompt": "What colour does {name} wear the most?"
-    },
-    {
       "id": "fav-breakfast",
       "category": "favourites",
       "selfPrompt": "What's your ideal breakfast?",
       "partnerPrompt": "What's {name}'s ideal breakfast?"
-    },
-    {
-      "id": "fav-crisps",
-      "category": "favourites",
-      "selfPrompt": "What's your favourite crisp flavour?",
-      "partnerPrompt": "What's {name}'s favourite crisp flavour?"
     },
     {
       "id": "fav-board-game",
@@ -96,12 +84,6 @@
       "category": "favourites",
       "selfPrompt": "What's your perfect sandwich?",
       "partnerPrompt": "What's {name}'s perfect sandwich?"
-    },
-    {
-      "id": "fav-day",
-      "category": "favourites",
-      "selfPrompt": "What's your favourite day of the week?",
-      "partnerPrompt": "What's {name}'s favourite day of the week?"
     },
     {
       "id": "fav-coffee-order",
@@ -158,22 +140,70 @@
       "partnerPrompt": "What's {name}'s favourite cheese?"
     },
     {
+      "id": "fav-comfort-food",
+      "category": "favourites",
+      "selfPrompt": "What's your ultimate comfort food?",
+      "partnerPrompt": "What's {name}'s ultimate comfort food?"
+    },
+    {
+      "id": "fav-restaurant",
+      "category": "favourites",
+      "selfPrompt": "What's your favourite restaurant?",
+      "partnerPrompt": "What's {name}'s favourite restaurant?"
+    },
+    {
+      "id": "fav-book",
+      "category": "favourites",
+      "selfPrompt": "What's the best book you've ever read?",
+      "partnerPrompt": "What's the best book {name} has ever read?"
+    },
+    {
+      "id": "fav-flowers",
+      "category": "favourites",
+      "selfPrompt": "Which flowers would you always be happy to be given?",
+      "partnerPrompt": "Which flowers would {name} always be happy to be given?"
+    },
+    {
+      "id": "fav-weather",
+      "category": "favourites",
+      "selfPrompt": "What's your favourite kind of weather?",
+      "partnerPrompt": "What's {name}'s favourite kind of weather?"
+    },
+    {
+      "id": "fav-music-genre",
+      "category": "favourites",
+      "selfPrompt": "Which kind of music do you always come back to?",
+      "partnerPrompt": "Which kind of music does {name} always come back to?"
+    },
+    {
+      "id": "fav-cocktail",
+      "category": "favourites",
+      "selfPrompt": "What's your go-to cocktail?",
+      "partnerPrompt": "What's {name}'s go-to cocktail?"
+    },
+    {
+      "id": "fav-room-at-home",
+      "category": "favourites",
+      "selfPrompt": "Which room in the house is your favourite?",
+      "partnerPrompt": "Which room in the house is {name}’s favourite?"
+    },
+    {
+      "id": "fav-childhood-game",
+      "category": "favourites",
+      "selfPrompt": "Which game did you love most as a child?",
+      "partnerPrompt": "Which game did {name} love most as a child?"
+    },
+    {
+      "id": "fav-milktart-malva",
+      "category": "favourites",
+      "selfPrompt": "Milk tart or malva pudding?",
+      "partnerPrompt": "Would {name} pick milk tart or malva pudding?"
+    },
+    {
       "id": "habit-snooze",
       "category": "habits",
       "selfPrompt": "How many times do you hit snooze in the morning?",
       "partnerPrompt": "How many times does {name} hit snooze in the morning?"
-    },
-    {
-      "id": "habit-shower-time",
-      "category": "habits",
-      "selfPrompt": "Morning shower or evening shower?",
-      "partnerPrompt": "Does {name} shower in the morning or the evening?"
-    },
-    {
-      "id": "habit-toilet-roll",
-      "category": "habits",
-      "selfPrompt": "Toilet roll: over or under?",
-      "partnerPrompt": "Toilet roll: does {name} say over or under?"
     },
     {
       "id": "habit-socks-in-bed",
@@ -236,18 +266,6 @@
       "partnerPrompt": "What does {name} snack on when nobody's watching?"
     },
     {
-      "id": "habit-shopping-list",
-      "category": "habits",
-      "selfPrompt": "Do you shop with a list or wing it?",
-      "partnerPrompt": "Does {name} shop with a list or wing it?"
-    },
-    {
-      "id": "habit-nap-length",
-      "category": "habits",
-      "selfPrompt": "What's your ideal nap length?",
-      "partnerPrompt": "What's {name}'s ideal nap length?"
-    },
-    {
       "id": "habit-lost-item",
       "category": "habits",
       "selfPrompt": "What do you lose most often?",
@@ -302,6 +320,60 @@
       "partnerPrompt": "What does {name} do while waiting in a long queue?"
     },
     {
+      "id": "habit-sleep-position",
+      "category": "habits",
+      "selfPrompt": "What position do you sleep in?",
+      "partnerPrompt": "What position does {name} sleep in?"
+    },
+    {
+      "id": "habit-wake-first-thing",
+      "category": "habits",
+      "selfPrompt": "What's the first thing you do after getting out of bed?",
+      "partnerPrompt": "What's the first thing {name} does after getting out of bed?"
+    },
+    {
+      "id": "habit-text-or-call",
+      "category": "habits",
+      "selfPrompt": "Text or phone call — which do you reach for?",
+      "partnerPrompt": "Text or phone call — which does {name} reach for?"
+    },
+    {
+      "id": "habit-organised-or-messy",
+      "category": "habits",
+      "selfPrompt": "Are you organised or a bit of a mess?",
+      "partnerPrompt": "Is {name} organised or a bit of a mess?"
+    },
+    {
+      "id": "habit-when-lost",
+      "category": "habits",
+      "selfPrompt": "When you're lost, do you ask someone or work it out yourself?",
+      "partnerPrompt": "When {name} is lost, do they ask someone or work it out themselves?"
+    },
+    {
+      "id": "habit-deadlines",
+      "category": "habits",
+      "selfPrompt": "Do you finish things early or leave them to the last minute?",
+      "partnerPrompt": "Does {name} finish things early or leave them to the last minute?"
+    },
+    {
+      "id": "habit-surprises",
+      "category": "habits",
+      "selfPrompt": "Do you love a surprise or quietly dread them?",
+      "partnerPrompt": "Does {name} love a surprise or quietly dread them?"
+    },
+    {
+      "id": "habit-rainy-day",
+      "category": "habits",
+      "selfPrompt": "What's your ideal rainy day plan?",
+      "partnerPrompt": "What's {name}'s ideal rainy day plan?"
+    },
+    {
+      "id": "habit-load-shedding",
+      "category": "habits",
+      "selfPrompt": "What's the first thing you do when the lights go out?",
+      "partnerPrompt": "What's the first thing {name} does when the lights go out?"
+    },
+    {
       "id": "hist-met-where",
       "category": "history",
       "selfPrompt": "Where did the two of you first meet?",
@@ -318,12 +390,6 @@
       "category": "history",
       "selfPrompt": "What was your first impression of your partner?",
       "partnerPrompt": "What was {name}'s first impression of you?"
-    },
-    {
-      "id": "hist-first-words",
-      "category": "history",
-      "selfPrompt": "What were the first words you ever said to each other?",
-      "partnerPrompt": "What does {name} say were the first words you said to each other?"
     },
     {
       "id": "hist-first-trip",
@@ -392,12 +458,6 @@
       "partnerPrompt": "Who does {name} say said 'I love you' first?"
     },
     {
-      "id": "hist-anniversary-month",
-      "category": "history",
-      "selfPrompt": "Which month is your anniversary?",
-      "partnerPrompt": "Which month does {name} say your anniversary is?"
-    },
-    {
       "id": "hist-annoying-habit",
       "category": "history",
       "selfPrompt": "What's your partner's most annoying habit?",
@@ -420,6 +480,48 @@
       "category": "history",
       "selfPrompt": "Where do you most want to travel together next?",
       "partnerPrompt": "Where does {name} most want to travel together next?"
+    },
+    {
+      "id": "hist-worst-fight",
+      "category": "history",
+      "selfPrompt": "What's the worst fight the two of you have had?",
+      "partnerPrompt": "What would {name} say was the worst fight the two of you have had?"
+    },
+    {
+      "id": "hist-the-one-moment",
+      "category": "history",
+      "selfPrompt": "What was the moment you decided your partner was the one?",
+      "partnerPrompt": "What was the moment {name} decided you were the one?"
+    },
+    {
+      "id": "hist-money-manager",
+      "category": "history",
+      "selfPrompt": "Which of you is better with money?",
+      "partnerPrompt": "Which of you would {name} say is better with money?"
+    },
+    {
+      "id": "hist-nicest-thing",
+      "category": "history",
+      "selfPrompt": "What's the nicest thing your partner has ever done for you?",
+      "partnerPrompt": "What's the nicest thing {name} would say you've ever done for them?"
+    },
+    {
+      "id": "hist-double-date",
+      "category": "history",
+      "selfPrompt": "Which couple would you pick to go on a double date with?",
+      "partnerPrompt": "Which couple would {name} pick to go on a double date with?"
+    },
+    {
+      "id": "hist-do-more-often",
+      "category": "history",
+      "selfPrompt": "What do you wish the two of you did more often?",
+      "partnerPrompt": "What does {name} wish the two of you did more often?"
+    },
+    {
+      "id": "hist-first-photo",
+      "category": "history",
+      "selfPrompt": "Where was the first photo of the two of you taken?",
+      "partnerPrompt": "Where would {name} say the first photo of the two of you was taken?"
     },
     {
       "id": "wyr-beach-mountains",
@@ -468,12 +570,6 @@
       "category": "would_you_rather",
       "selfPrompt": "Would you rather read minds or see the future?",
       "partnerPrompt": "Would {name} rather read minds or see the future?"
-    },
-    {
-      "id": "wyr-summer-winter",
-      "category": "would_you_rather",
-      "selfPrompt": "Would you rather live somewhere always hot or always cold?",
-      "partnerPrompt": "Would {name} rather live somewhere always hot or always cold?"
     },
     {
       "id": "wyr-cat-dog",
@@ -542,16 +638,46 @@
       "partnerPrompt": "Would {name} rather travel to the past or the future?"
     },
     {
-      "id": "wyr-same-meal",
+      "id": "wyr-beach-ski",
       "category": "would_you_rather",
-      "selfPrompt": "Would you rather eat the same meal every day or never eat the same thing twice?",
-      "partnerPrompt": "Would {name} rather eat the same meal every day or never eat the same thing twice?"
+      "selfPrompt": "Would you rather a beach holiday or a skiing holiday?",
+      "partnerPrompt": "Would {name} rather a beach holiday or a skiing holiday?"
     },
     {
-      "id": "wyr-taste-smell",
+      "id": "wyr-horror-comedy",
       "category": "would_you_rather",
-      "selfPrompt": "Would you rather lose your sense of taste or your sense of smell?",
-      "partnerPrompt": "Would {name} rather lose their sense of taste or their sense of smell?"
+      "selfPrompt": "Would you rather watch a horror film or a comedy?",
+      "partnerPrompt": "Would {name} rather watch a horror film or a comedy?"
+    },
+    {
+      "id": "wyr-saturday-out-in",
+      "category": "would_you_rather",
+      "selfPrompt": "Would you rather go out on a Saturday night or stay in?",
+      "partnerPrompt": "Would {name} rather go out on a Saturday night or stay in?"
+    },
+    {
+      "id": "wyr-money-or-family",
+      "category": "would_you_rather",
+      "selfPrompt": "Would you rather be rich and far from family or broke and close to them?",
+      "partnerPrompt": "Would {name} rather be rich and far from family or broke and close to them?"
+    },
+    {
+      "id": "wyr-solo-group-travel",
+      "category": "would_you_rather",
+      "selfPrompt": "Would you rather travel alone or with a big group?",
+      "partnerPrompt": "Would {name} rather travel alone or with a big group?"
+    },
+    {
+      "id": "wyr-eat-out-or-home",
+      "category": "would_you_rather",
+      "selfPrompt": "Would you rather always eat out or always eat at home?",
+      "partnerPrompt": "Would {name} rather always eat out or always eat at home?"
+    },
+    {
+      "id": "wyr-simple-or-luxurious",
+      "category": "would_you_rather",
+      "selfPrompt": "Would you rather a simple life or a luxurious one?",
+      "partnerPrompt": "Would {name} rather a simple life or a luxurious one?"
     },
     {
       "id": "fun-useless-talent",
@@ -644,22 +770,10 @@
       "partnerPrompt": "What's {name}'s signature dish?"
     },
     {
-      "id": "fun-caffeine-count",
-      "category": "fun",
-      "selfPrompt": "How many coffees before you're properly human?",
-      "partnerPrompt": "How many coffees before {name} is properly human?"
-    },
-    {
       "id": "fun-petty-hill",
       "category": "fun",
       "selfPrompt": "What's the pettiest hill you will die on?",
       "partnerPrompt": "What's the pettiest hill {name} will die on?"
-    },
-    {
-      "id": "fun-last-googled",
-      "category": "fun",
-      "selfPrompt": "What was the last thing you googled?",
-      "partnerPrompt": "What was the last thing {name} googled?"
     },
     {
       "id": "fun-thinks-about",
@@ -702,6 +816,66 @@
       "category": "fun",
       "selfPrompt": "Boerewors or sosaties at a braai?",
       "partnerPrompt": "Does {name} go for boerewors or sosaties at a braai?"
+    },
+    {
+      "id": "fun-insect-fear",
+      "category": "fun",
+      "selfPrompt": "Which insect terrifies you the most?",
+      "partnerPrompt": "Which insect terrifies {name} the most?"
+    },
+    {
+      "id": "fun-tattoo",
+      "category": "fun",
+      "selfPrompt": "If you got a tattoo tomorrow, what would it be and where?",
+      "partnerPrompt": "If {name} got a tattoo tomorrow, what would it be and where?"
+    },
+    {
+      "id": "fun-island-three",
+      "category": "fun",
+      "selfPrompt": "Stranded on an island — which three things would you miss most?",
+      "partnerPrompt": "Stranded on an island — which three things would {name} miss most?"
+    },
+    {
+      "id": "fun-only-partner-knows",
+      "category": "fun",
+      "selfPrompt": "What's one thing about you that only your partner knows?",
+      "partnerPrompt": "What's one thing about {name} that only you know?"
+    },
+    {
+      "id": "fun-bucket-list",
+      "category": "fun",
+      "selfPrompt": "Name something that's on your bucket list.",
+      "partnerPrompt": "Name something that's on {name}'s bucket list."
+    },
+    {
+      "id": "fun-bag-contents",
+      "category": "fun",
+      "selfPrompt": "Which three things are always in your bag?",
+      "partnerPrompt": "Which three things are always in {name}’s bag?"
+    },
+    {
+      "id": "fun-band-name",
+      "category": "fun",
+      "selfPrompt": "If you started a band, what would it be called?",
+      "partnerPrompt": "If {name} started a band, what would it be called?"
+    },
+    {
+      "id": "fun-dinner-guest",
+      "category": "fun",
+      "selfPrompt": "Which famous person, living or dead, would you invite to dinner?",
+      "partnerPrompt": "Which famous person, living or dead, would {name} invite to dinner?"
+    },
+    {
+      "id": "fun-picky-eater",
+      "category": "fun",
+      "selfPrompt": "Which of you is the fussier eater?",
+      "partnerPrompt": "Which of you would {name} say is the fussier eater?"
+    },
+    {
+      "id": "fun-biltong-droewors",
+      "category": "fun",
+      "selfPrompt": "Biltong or droëwors?",
+      "partnerPrompt": "Would {name} pick biltong or droëwors?"
     },
     {
       "id": "deep-most-proud",
@@ -788,12 +962,6 @@
       "partnerPrompt": "When does {name} feel most like themselves?"
     },
     {
-      "id": "deep-love-language",
-      "category": "deep",
-      "selfPrompt": "What's your love language?",
-      "partnerPrompt": "What's {name}'s love language?"
-    },
-    {
       "id": "deep-kindest-thing",
       "category": "deep",
       "selfPrompt": "What's the kindest thing anyone has ever done for you?",
@@ -852,6 +1020,60 @@
       "category": "deep",
       "selfPrompt": "Did the coast or the bushveld shape your childhood holidays?",
       "partnerPrompt": "Did the coast or the bushveld shape {name}'s childhood holidays?"
+    },
+    {
+      "id": "deep-ten-year-goal",
+      "category": "deep",
+      "selfPrompt": "What do you most want to have done ten years from now?",
+      "partnerPrompt": "What does {name} most want to have done ten years from now?"
+    },
+    {
+      "id": "deep-biggest-regret",
+      "category": "deep",
+      "selfPrompt": "What's one of your biggest regrets?",
+      "partnerPrompt": "What's one of {name}'s biggest regrets?"
+    },
+    {
+      "id": "deep-safest-place",
+      "category": "deep",
+      "selfPrompt": "Where do you feel safest?",
+      "partnerPrompt": "Where does {name} feel safest?"
+    },
+    {
+      "id": "deep-insecurity",
+      "category": "deep",
+      "selfPrompt": "What's an insecurity you don't talk about often?",
+      "partnerPrompt": "What's an insecurity {name} doesn't talk about often?"
+    },
+    {
+      "id": "deep-respect-most",
+      "category": "deep",
+      "selfPrompt": "Of everyone close to you, who do you respect the most?",
+      "partnerPrompt": "Of everyone close to {name}, who do they respect the most?"
+    },
+    {
+      "id": "deep-life-changing-event",
+      "category": "deep",
+      "selfPrompt": "Which single event changed the course of your life?",
+      "partnerPrompt": "Which single event changed the course of {name}’s life?"
+    },
+    {
+      "id": "deep-admire-parents",
+      "category": "deep",
+      "selfPrompt": "What do you admire most about your parents?",
+      "partnerPrompt": "What does {name} admire most about their parents?"
+    },
+    {
+      "id": "deep-current-struggle",
+      "category": "deep",
+      "selfPrompt": "What are you finding hardest at the moment?",
+      "partnerPrompt": "What is {name} finding hardest at the moment?"
+    },
+    {
+      "id": "deep-dream-job",
+      "category": "deep",
+      "selfPrompt": "What job have you always secretly wanted to do?",
+      "partnerPrompt": "What job has {name} always secretly wanted to do?"
     },
     {
       "id": "spice-bed-outfit",
@@ -926,12 +1148,6 @@
       "partnerPrompt": "What's {name}'s favourite way you flirt with them?"
     },
     {
-      "id": "spice-free-pass",
-      "category": "spice",
-      "selfPrompt": "Who's on your celebrity free pass list?",
-      "partnerPrompt": "Who's on {name}'s celebrity free pass list?"
-    },
-    {
       "id": "spice-most-romantic",
       "category": "spice",
       "selfPrompt": "What's the most romantic thing your partner has ever done?",
@@ -1002,6 +1218,36 @@
       "category": "spice",
       "selfPrompt": "Klippies and Coke or bubbly for a romantic night in?",
       "partnerPrompt": "Would {name} pick Klippies and Coke or bubbly for a romantic night in?"
+    },
+    {
+      "id": "spice-pda",
+      "category": "spice",
+      "selfPrompt": "How do you feel about public displays of affection?",
+      "partnerPrompt": "How does {name} feel about public displays of affection?"
+    },
+    {
+      "id": "spice-weak-knees",
+      "category": "spice",
+      "selfPrompt": "What does your partner do that makes you weak at the knees?",
+      "partnerPrompt": "What do you do that makes {name} weak at the knees?"
+    },
+    {
+      "id": "spice-perfect-date",
+      "category": "spice",
+      "selfPrompt": "What's your idea of a perfect date?",
+      "partnerPrompt": "What's {name}'s idea of a perfect date?"
+    },
+    {
+      "id": "spice-attractive-feature",
+      "category": "spice",
+      "selfPrompt": "Which part of your partner's face do you find most attractive?",
+      "partnerPrompt": "Which part of your face does {name} find most attractive?"
+    },
+    {
+      "id": "spice-touch",
+      "category": "spice",
+      "selfPrompt": "What kind of touch do you appreciate most?",
+      "partnerPrompt": "What kind of touch does {name} appreciate most?"
     }
   ]
 }

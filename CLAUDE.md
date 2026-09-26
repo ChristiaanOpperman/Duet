@@ -122,7 +122,7 @@ when the pool runs dry do different couples start sharing.
 
 ### The question pack
 
-`assets/questions/questions.json` — 167 questions, plain JSON so they can be
+`assets/questions/questions.json` — 208 questions, plain JSON so they can be
 edited by hand. Every entry needs two voices: `selfPrompt` ("What is your
 favourite nut?") and `partnerPrompt` with a `{name}` slot ("What is {name}'s
 favourite nut?"). `QuestionRepository` parses strictly and throws on a bad

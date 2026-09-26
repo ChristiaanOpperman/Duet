@@ -60,7 +60,7 @@ Like the game history, these live in memory for the session only.
 their partner. Categories are `favourites`, `habits`, `history`,
 `would_you_rather`, `fun`, `deep` and `spice`.
 
-167 questions ship with the app. **Spice is off by default** — it is
+208 questions ship with the app. **Spice is off by default** — it is
 bedroom-flavoured, so the host switches it on deliberately from Game options.
 Every category holds enough on its own to run a full six-couple game, so you
 can play an evening of nothing but Deep & Meaningful if you want to.
